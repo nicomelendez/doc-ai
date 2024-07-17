@@ -1,51 +1,89 @@
 ---
+import { ViewTransitions } from 'astro:transitions'
+import '@fontsource-variable/rubik'
+import Footer from '@/components/layout/Footer.astro'
+import Header from '@/components/layout/Header.astro'
+import Background from '@/components/layout/Background.astro'
+import Modal from '@/components/layout/Modal.astro'
+
 interface Props {
-	title: string;
+  title: string
 }
 
-const { title } = Astro.props;
+const { title } = Astro.props
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang='es'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name="description" content="Genera informes profesionales de manera sencilla y rápida para tus estudios o trabajos. Doc AI transforma tu texto o PDF en documentos organizados y listos para usar.">
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <title>{title}</title>
+    <ViewTransitions />
+  </head>
+  <body>
+    <Background />
+    <Modal/>
+    <div id='app' class='max-w-[1500px] mx-auto p-4 md:p-8'>
+      <Header />
+      <main>
+        <slot />
+      </main>
+      <Footer />
+    </div>
+    <style is:global>
+      :root {
+        --color-primary: #fa8918;
+        --color-secondary: #3e2206;
+        --color-tertiary: #fff;
+
+        --background-image: #eff2f8;
+      }
+      html {
+        font-family: 'Rubik Variable', system-ui, sans-serif;
+        overflow-x: hidden;
+        overscroll-behavior: none;
+      }
+
+      @media screen and (prefers-reduced-motion: no-preference) {
+        html {
+          scroll-behavior: smooth;
+        }
+      }
+
+      #app {
+        width: 100%;
+        min-height: 100vh;
+        display: grid;
+        grid-template-areas: 'header' 'main' 'footer';
+        grid-template-rows: 85px 1fr auto;
+      }
+
+      ::-webkit-scrollbar {
+        width: 10px;
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: theme('colors.primary');
+        border: 2px solid transparent;
+        background-clip: content-box;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--background-image);
+      }
+
+      ::-webkit-scrollbar-corner {
+        background: var(--background-image);
+      }
+
+      .sombra {
+        filter: drop-shadow(-2px 0px 5px rgba(255, 255, 255, 0.2));
+      }
+    </style>
+  </body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>
