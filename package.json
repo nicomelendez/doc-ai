@@ -11,9 +11,13 @@
   },
   "dependencies": {
     "@fontsource-variable/rubik": "5.0.22",
+    "ai": "^3.2.27",
     "astro": "4.11.6",
+    "openai": "^4.52.7",
+    "openai-edge": "^1.2.2",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@astrojs/check": "0.8.2",

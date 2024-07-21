@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer.astro'
 import Header from '@/components/layout/Header.astro'
 import Background from '@/components/layout/Background.astro'
 import Modal from '@/components/layout/Modal.astro'
+import SaveLocalStore from '@/components/SaveLocalStore'
 
 interface Props {
   title: string
@@ -17,15 +18,19 @@ const { title } = Astro.props
 <html lang='es'>
   <head>
     <meta charset='UTF-8' />
-    <meta name="description" content="Genera informes profesionales de manera sencilla y rápida para tus estudios o trabajos. Doc AI transforma tu texto o PDF en documentos organizados y listos para usar.">
+    <meta
+      name='description'
+      content='Genera informes profesionales de manera sencilla y rápida para tus estudios o trabajos. Doc AI transforma tu texto o PDF en documentos organizados y listos para usar.'
+    />
     <meta name='viewport' content='width=device-width' />
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <title>{title}</title>
     <ViewTransitions />
   </head>
   <body>
+    <SaveLocalStore client:load/>
     <Background />
-    <Modal/>
+    <Modal />
     <div id='app' class='max-w-[1500px] mx-auto p-4 md:p-8'>
       <Header />
       <main>
@@ -85,5 +90,33 @@ const { title } = Astro.props
         filter: drop-shadow(-2px 0px 5px rgba(255, 255, 255, 0.2));
       }
     </style>
+    <script>
+      document.addEventListener('astro:page-load', () => {
+        const modal = document.getElementById('modal')
+        const closeModalButton = document.getElementById('closeModal')
+
+        if (modal == null || closeModalButton == null) {
+          return
+        }
+
+        // Función para ocultar el modal
+        function hideModal() {
+          if (modal?.style == null) return
+          modal.style.display = 'none'
+        }
+
+        // Listener para el botón de cerrar dentro del modal
+        closeModalButton.addEventListener('click', function () {
+          hideModal()
+        })
+
+        // Listener para cerrar el modal si se hace clic fuera de su contenido
+        window.addEventListener('click', function (event) {
+          if (event.target === modal) {
+            hideModal()
+          }
+        })
+      })
+    </script>
   </body>
 </html>
