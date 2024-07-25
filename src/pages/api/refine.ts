@@ -1,14 +1,15 @@
 import { type APIRoute } from 'astro'
-import { contextInfo } from '@/lib/ai-summary.ts'
+import { refineContext } from '@/lib/ai-summary.ts'
 
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.text()
     if (!body) return new Response('No body data', { status: 400 })
 
-    const jsonBody = JSON.parse(body)
+    const { contextInfo, responses } = JSON.parse(body)
 
-    const context = await contextInfo(jsonBody.info)
+    const context = await refineContext(contextInfo, responses)
+    console.log(context)
 
     return new Response(JSON.stringify(context), { status: 200 })
   } catch (error) {

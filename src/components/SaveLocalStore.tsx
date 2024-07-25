@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react'
-import useStore from '@/lib/useStore.js'
+import useStore from '@/lib/useStore.ts'
+
 export default function SaveLocalStore() {
-  const { apiResponse, setApiResponse } = useStore((state: any) => state)
+  const { setAnalysisResponse, setContextResponse } = useStore(
+    (state: any) => state
+  )
 
   useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === 'analyze') {
         const newState = JSON.parse(event.newValue || '[]')
-        setApiResponse(newState)
+        setAnalysisResponse(newState)
       }
     }
 
@@ -21,8 +24,11 @@ export default function SaveLocalStore() {
   useEffect(() => {
     const analyzeString = localStorage.getItem('analyze')
     if (analyzeString != null) {
-    
-      setApiResponse({ data: analyzeString })
+      setAnalysisResponse({ analysisResponse: analyzeString })
+    }
+    const contextString = localStorage.getItem('context')
+    if (contextString != null) {
+      setContextResponse({ contextResponse: contextString })
     }
   }, [])
 

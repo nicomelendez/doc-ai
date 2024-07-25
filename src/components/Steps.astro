@@ -1,0 +1,87 @@
+---
+import Step from './Step.astro'
+---
+
+<section>
+  <div class='max-w-screen-lg px-4 py-8 sm:px-6 sm:py-12 lg:px-8'>
+    <div class='grid grid-cols-1 gap-y-8'>
+      <div
+        class='mx-auto max-w-lg text-center ltr:lg:text-left rtl:lg:text-right'
+      >
+        <h2 class='text-xl md:text-2xl text-white font-bold'>
+          Tres simples pasos
+        </h2>
+
+        <p class='mt-4 text-gray-300 text-sm'>
+          Analizaremos el contenido y generaremos un documento base que te
+          ayudará a estructurar tu informe de manera eficiente y profesional
+        </p>
+      </div>
+
+      <div class='grid grid-cols sm:grid-cols-2 gap-5 md:grid-cols-3'>
+        <Step
+          title='Subir texto o PDF'
+          descripcion='Sube un texto o archivo PDF.'
+        >
+          <svg
+            class='h-6 w-6'
+            xmlns='http://www.w3.org/2000/svg'
+            width='24'
+            height='24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='icon icon-tabler icons-tabler-outline icon-tabler-letter-case'
+            ><path d='M0 0h24v24H0z' stroke='none'></path><path
+              d='M14 15.5a3.5 3.5 0 1 0 7 0 3.5 3.5 0 1 0-7 0M3 19V8.5a3.5 3.5 0 0 1 7 0V19M3 13h7M21 12v7'
+            ></path></svg
+          >
+        </Step>
+        <Step
+          title='Analizar el contenido'
+          descripcion='Analizamos y generamos preguntas.'
+        >
+          <svg
+            class='h-6 w-6'
+            xmlns='http://www.w3.org/2000/svg'
+            width='24'
+            height='24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='icon icon-tabler icons-tabler-outline icon-tabler-analyze'
+            ><path d='M0 0h24v24H0z' stroke='none'></path><path
+              d='M20 11a8.1 8.1 0 0 0-6.986-6.918A8.095 8.095 0 0 0 4.995 8M4 13a8.1 8.1 0 0 0 15 3'
+            ></path><path
+              d='M18 16a1 1 0 1 0 2 0 1 1 0 1 0-2 0M4 8a1 1 0 1 0 2 0 1 1 0 1 0-2 0M9 12a3 3 0 1 0 6 0 3 3 0 1 0-6 0'
+            ></path></svg
+          >
+        </Step>
+        <Step
+          title='Descargar el documento'
+          descripcion='Responde y descarga el documento.'
+        >
+          <svg
+            class='h-6 w-6'
+            xmlns='http://www.w3.org/2000/svg'
+            width='24'
+            height='24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='icon icon-tabler icons-tabler-outline icon-tabler-download'
+            ><path d='M0 0h24v24H0z' stroke='none'></path><path
+              d='M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M7 11l5 5 5-5M12 4v12'
+            ></path></svg
+          >
+        </Step>
+      </div>
+    </div>
+  </div>
+</section>
