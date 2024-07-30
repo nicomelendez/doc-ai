@@ -3,15 +3,19 @@ import {
   getPromptAnalyze,
   getPromptContext,
   refineContextPrompt,
+  expandPoint,
 } from './const'
-import type { Ask } from './types'
+import type { AnalysisResponse, Ask, Pointer } from './types'
+import { OpenAIStream, StreamingTextResponse } from 'ai' // Vercel AI SDK ***
 
 const perplexity = new OpenAI({
   apiKey: import.meta.env.PERPLEXITY_API_KEY || '',
   baseURL: 'https://api.perplexity.ai',
 })
 
-function buildPrompt(prompt: string): [{ role: 'user'; content: string }] {
+export function buildPrompt(
+  prompt: string
+): [{ role: 'user'; content: string }] {
   return [
     {
       role: 'user',
@@ -20,6 +24,29 @@ function buildPrompt(prompt: string): [{ role: 'user'; content: string }] {
   ]
 }
 
+export async function analyzeUserInfo(info: string) {
+  const prompt = `
+    Generame un texto de almenos 100 caracteres sobre esto:
+    ${info}
+  `
+
+  const query = {
+    model: 'llama-3-sonar-large-32k-chat',
+    stream: true,
+    messages: buildPrompt(prompt),
+    max_tokens: 1000,
+    temperature: 0.75,
+    frequency_penalty: 1,
+  } as const
+
+  const response = await perplexity.chat.completions.create(query)
+
+  const stream = OpenAIStream(response)
+
+  const streamingResponse = new StreamingTextResponse(stream)
+  return await streamingResponse.text()
+}
+ 
 export async function analyzeInfo(info: String) {
   try {
     const prompt = getPromptAnalyze(info)
@@ -27,7 +54,7 @@ export async function analyzeInfo(info: String) {
     const query = {
       model: 'llama-3-sonar-large-32k-chat',
       messages: buildPrompt(prompt),
-      max_tokens: 5000,
+      max_tokens: 10000,
       temperature: 0.75,
       frequency_penalty: 1,
     } as const
@@ -39,7 +66,6 @@ export async function analyzeInfo(info: String) {
     if (textResponse == null) return null
 
     const jsonResponse = JSON.parse(textResponse)
-
     return jsonResponse
   } catch (error) {
     return null
@@ -65,7 +91,7 @@ export async function contextInfo(info: String) {
     const response = await perplexity.chat.completions.create(query)
 
     const textResponse = response.choices[0].message.content
-    console.log(textResponse)
+
     if (textResponse == null) return null
 
     const jsonResponse = JSON.parse(textResponse)
@@ -86,7 +112,7 @@ export async function refineContext(originalContext: String, responses: Ask[]) {
       const query = {
         model: 'llama-3-sonar-large-32k-chat',
         messages: buildPrompt(prompt),
-        max_tokens: 5000,
+        max_tokens: 8000,
         temperature: 0.75,
         frequency_penalty: 1,
       } as const
@@ -104,13 +130,92 @@ export async function refineContext(originalContext: String, responses: Ask[]) {
 
         refinedContext = jsonResponse.context
       } catch (error) {
-        return // Exit if JSON parsing fails
+        return
       }
     }
 
-    return refinedContext // Retorna el contexto completamente refinado
+    return refinedContext
   } catch (error) {
     console.error('Error refining context:', error)
+    return null
+  }
+}
+
+export async function expandPointDetails(title: String, descripcion: String) {
+  const prompt = expandPoint(title, descripcion, 'Español')
+  const query = {
+    model: 'llama-3-sonar-large-32k-chat',
+    messages: buildPrompt(prompt),
+    max_tokens: 7000,
+    temperature: 0.75,
+    frequency_penalty: 1,
+  }
+
+  try {
+    const response = await perplexity.chat.completions.create(query)
+    const textResponse = response.choices[0].message.content
+
+    if (textResponse == null || textResponse.trim() === '') {
+      console.error('No response or empty response received.')
+      return
+    }
+
+    const objeto = JSON.parse(textResponse)
+    console.log(objeto)
+    return objeto
+  } catch (error) {
+    console.error('Failed to expand point details:', error)
+    return null
+  }
+}
+
+export async function analyzeAndExpandInfo(initialPoints: AnalysisResponse) {
+  const expandedPoints = await Promise.all(
+    initialPoints.pointers.map(async (point: Pointer) => {
+      const pointer = await expandPointDetails(point.title, point.descripcion)
+      return pointer
+    })
+  )
+  const markdown = await jsonToMarkdown(expandedPoints)
+  console.log(markdown)
+  return expandedPoints
+}
+async function jsonToMarkdown(jsonData: any) {
+  const prompt = `Genera un documento en Markdown utilizando la siguiente información estructurada en JSON:
+  ${JSON.stringify(jsonData, null, 2)}
+  
+  Instrucciones detalladas:
+  - **Evitar Redundancias en Títulos**: Utiliza títulos únicos para cada sección. Si un subtítulo repite información del título principal, intégralo en la descripción en lugar de listar como subtítulo separado.
+  - **Consistencia Idiomática**: Mantén la coherencia en el uso del idioma, asegurándote de utilizar una ortografía y gramática correctas en español. Corrige términos incorrectos como "various" a "varios".
+  - **Optimización de Longitud**: Condensa la información para mantener las secciones informativas y concisas, evitando redundancias. Céntrate en mantener la claridad y eliminar duplicaciones innecesarias.
+  - **Inclusión de URLs en Bibliografía**: Asegúrate de que todas las URLs en la bibliografía estén en formato de enlace clicable, usando Markdown.
+  
+  Explicación del formato Markdown deseado:
+  - **'#' para títulos de secciones**: Usa un solo hash '#' para títulos principales de cada sección, lo cual los convierte en encabezados de nivel uno en Markdown, destacándolos como los más importantes.
+  - **'##' para subsecciones**: Usa dos hashes '##' para subsecciones dentro de cada sección principal, creando así encabezados de nivel dos, que son subordinados a los títulos principales.
+  - **Descripciones largas**: Estas deben seguir directamente a cada título o subtítulo y estar formateadas como texto normal sin marcadores adicionales.
+  - **Listas y puntos**: Utiliza guiones '-' para listas no ordenadas donde sea relevante, para organizar la información de forma que sea fácilmente digestible.
+  - **Enlaces clicable en la bibliografía**: Formatea los enlaces como [Nombre del Sitio](URL) para asegurar que sean interactivos y accesibles.
+  
+  Por favor, sigue estas instrucciones para crear un documento estructurado, informativo y fácil de navegar. 
+  
+  Recuerda que solo quiero un documento markdown sin nada más adicional`
+
+  const query = {
+    model: 'llama-3-sonar-large-32k-chat',
+    messages: buildPrompt(prompt),
+    max_tokens: 10000,
+    temperature: 0.75,
+    frequency_penalty: 1,
+  }
+
+  try {
+    const response = await perplexity.chat.completions.create(query)
+    const markdownResponse = response.choices[0].message.content
+    if (!markdownResponse) throw new Error('No Markdown response received.')
+    return markdownResponse
+  } catch (error) {
+    console.error('Failed to generate Markdown:', error)
     return null
   }
 }

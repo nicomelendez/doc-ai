@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import useStore from '@/lib/useStore.ts'
-import Loading from './Loading'
+import Loading from '@/components/utils/Loading'
 
 export default function Formulario({ children }) {
   const setContextResponse = useStore((state) => state.setContextResponse)
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
-
+  
   function showModal(modal) {
     if (modal?.style == null) return
     modal.style.display = 'block'
@@ -24,7 +24,7 @@ export default function Formulario({ children }) {
     }
     try {
       setLoading(true)
-      const response = await fetch('/api/analyze', {
+      const response = await fetch('/api/context', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,6 +51,7 @@ export default function Formulario({ children }) {
       return
     }
   }
+
   return (
     <div className='mx-auto mt-8 max-w-xl pb-10 md:pb-0'>
       {loading ? (
@@ -63,9 +64,6 @@ export default function Formulario({ children }) {
           >
             {children}
           </form>
-          <p className='text-center text-red-600 text-sm pt-5'>
-            {error ? 'Debes ingresar un texto de almenos 500 caracteres.' : ''}
-          </p>
         </>
       )}
     </div>

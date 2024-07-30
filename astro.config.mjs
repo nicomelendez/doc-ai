@@ -18,7 +18,7 @@ export default defineConfig({
       cssMinify: 'lightningcss',
     },
     ssr: {
-      noExternal: ['path-to-regexp', 'openai'], // Ensure "openai" is handled properly by Vite during SSR
+      noExternal: ['path-to-regexp', 'openai'],
     },
     plugins: [
       VitePWA({

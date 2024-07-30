@@ -17,7 +17,7 @@ const useStore = create<StoreState>((set: any) => ({
   getContext: () => {
     const state: StoreState = useStore.getState()
     if (state.contextResponse) {
-      return JSON.parse(JSON.stringify(state.contextResponse))
+      return state.contextResponse
     }
     return null
   },
@@ -27,7 +27,7 @@ const useStore = create<StoreState>((set: any) => ({
     })),
   getConfig: () => {
     const state: StoreState = useStore.getState()
-    return JSON.parse(JSON.stringify(state.config))
+    return state.config
   },
 }))
 

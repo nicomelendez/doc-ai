@@ -1,14 +1,18 @@
 export const getPromptAnalyze = (info: String) =>
-  `Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Este JSON se usará como base para crear un documento estructurado en formato Markdown. Luego, este documento Markdown se convertirá en un archivo Word bien formateado. El documento Word final será utilizado por el usuario para entregar un informe académico a su universidad o escuela, asegurando que el contenido esté organizado, claro y profesional.
- 
+  `
+Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Este JSON se usará como base para crear un documento estructurado en formato Markdown, que luego se convertirá en un archivo Word bien formateado. El documento Word final será utilizado por el usuario para entregar un informe académico a su universidad o escuela, asegurando que el contenido esté organizado, claro y semiformal.
+
+Debes utilizar un lenguaje natural y fluido, no repetir lo que mismo que dice el título. Enfócate en explicar las ideas de manera clara y concisa, como si estuvieras redactando un documento real. Además, el documento debe incluir al menos 7 puntos y una sección adicional de bibliografía, donde deberás citar las fuentes utilizadas.
+
+Debe de tener al menos 7 puntos y más uno extra que es una bibliografía donde deberas poner las URLS de los sitios o recursos que usaste para la información del documento.
+
 El JSON debe incluir los siguientes campos:
 
 - "status": Indica "analizando" si algún punto contiene preguntas y "completo" si no hay preguntas.
 - "pointers": Un arreglo de objetos, donde cada objeto representa un punto del texto con la siguiente estructura:
   - "id": Un identificador único para cada punto.
   - "title": Un título descriptivo que resuma el punto.
-  - "descripcion": Una descripción detallada y completa del punto minimo de 200 caracteres hacia arriba.
-  - "ask":  Genera una pregunta que creas necesaria para que este punto sea más claro y ajustado a lo que busca el usuario, no quiero que sea una pregunta muy dificil sino intuitiva para saber el enfoque que el usuario quiere darle.
+  - "descripcion": Una descripción detallada y completa del punto, de al menos 800 caracteres, utilizando un lenguaje natural y evitando la repetición del título.
 
 Aquí está el texto:
 
@@ -22,26 +26,23 @@ Ejemplo de salida deseada basado en un texto orientado a la programación web:
     {
       "id": 1,
       "title": "Introducción",
-      "descripcion": "Breve descripción del tema tratado en la introducción sobre programación web.",
-      "ask": "¿Cuál es el tipo de lenguaje que vas a utilizar?",
+      "descripcion": "La programación web ha evolucionado significativamente, permitiendo la creación de sitios y aplicaciones más dinámicas y funcionales. En esta sección se explorarán los conceptos básicos y la importancia de entender la estructura y el funcionamiento de las tecnologías web."
     },
     {
       "id": 2,
-      "title": "Herramientas y Frameworks",
-      "descripcion": "Explicación detallada de las herramientas y frameworks disponibles para la programación web.",
-      "ask": "¿Puedes mencionar el frameworks del que quieres hablar?",
+      "title": "Herramientas y frameworks",
+      "descripcion": "Existen diversas herramientas y frameworks que facilitan el desarrollo web. Entre los más populares se encuentran React, Angular y Vue.js, cada uno con sus propias ventajas y casos de uso específicos. Esta sección analizará sus características principales y cómo pueden optimizar el proceso de desarrollo."
     },
     {
       "id": 3,
-      "title": "Buenas Prácticas",
-      "descripcion": "Descripción de las mejores prácticas en programación web, incluyendo la estructura del código y la gestión de proyectos.",
-      "ask": "¿Qué buenas prácticas consideras esenciales?",
+      "title": "Buenas prácticas",
+      "descripcion": "Adoptar buenas prácticas en programación web es esencial para mantener el código organizado y eficiente. Esto incluye el uso de control de versiones, la adherencia a estándares de codificación y la implementación de pruebas automatizadas. Estas prácticas no solo mejoran la calidad del código, sino que también facilitan su mantenimiento y escalabilidad."
     }
   ]
 }
 
-  Recuerda, la salida debe ser únicamente el objeto JSON sin ningún texto adicional.
-}` as const
+Recuerda, la salida debe ser únicamente el objeto JSON sin ningún texto adicional.
+` as const
 
 export const getPromptContext = (
   info: String,
@@ -92,8 +93,37 @@ export const refineContextPrompt = (
       
       Ejemplo de salida deseada:
       {
-      "context": "La tecnología ha revolucionado profundamente la manera en que vivimos y trabajamos, marcando cada era con descubrimientos e innovaciones significativas. Desde la invención de la rueda, que facilitó el transporte y la logística, hasta los recientes avances en inteligencia artificial y computación cuántica, cada paso adelante ha redefinido los parámetros de nuestra existencia y operaciones. En la actualidad, nuestra dependencia de dispositivos inteligentes es más evidente que nunca; los utilizamos no solo para comunicarnos sino también para educarnos y entretenernos, tejiendo una red de interconexión global que trasciende fronteras geográficas y culturales. En el ámbito empresarial, los sistemas avanzados de gestión y análisis de datos han revolucionado los métodos tradicionales de operación, permitiendo a las empresas optimizar procesos y potenciar la productividad a niveles sin precedentes. La automatización y la robótica han introducido eficiencias operativas que reducen costos y tiempos de producción, mientras que el big data y el análisis predictivo facilitan una toma de decisiones más informada y estratégica. Sin embargo, este progreso no está exento de desafíos. La privacidad y la seguridad de la información se han convertido en preocupaciones centrales, con brechas de datos y ciberataques emergiendo como amenazas serias en un mundo cada vez más digitalizado. Además, la brecha digital sigue siendo un obstáculo significativo, destacando la desigualdad en el acceso a estas tecnologías avanzadas, lo que puede perpetuar o incluso exacerbar las disparidades socioeconómicas existentes. Este contexto demuestra cómo la tecnología, al ser una espada de doble filo, ofrece oportunidades para la innovación y la mejora de la calidad de vida, al tiempo que plantea retos significativos que deben ser abordados para asegurar un futuro equitativo y seguro para todos."
+      "context": "este atributo debe tener un de MINIMO 1000 caracteres y siempre que te llegue uno el que vos devuevlas debe ser igual o mayor de cantidad de caracteres."
       }
 
       La salida final debe ser un objeto JSON que contenga exclusivamente el contexto refinado, sin texto adicional. Asegúrate de que el contexto cumpla con el mínimo de caracteres requerido y refleje un entendimiento profundo del propósito del usuario.
       ` as const
+
+export const expandPoint = (
+  title: String,
+  descripcion: String,
+  language: String
+) =>
+  `
+        Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Este JSON se usará como base para crear un documento estructurado en formato Markdown. Considerando que estás ayudando a preparar un documento Word para un informe de tarea, necesitamos estructurar la información.
+      
+        **Idioma:** Debes generar el contenido en "${language}", teniendo en cuenta las normas ortográficas y gramaticales de dicho idioma. Utiliza un lenguaje natural y fluido, evitando repetir lo que ya dice el título. Tampoco vuelvas a hablar de lo mismo que hablaste en el anterior. Enfócate en explicar las ideas de manera clara y concisa, como si estuvieras redactando un documento real y no repitas contenido.
+      
+        **Instrucciones para el JSON:**
+        - "id": Debe ser un identificador único para cada punto.
+        - "title": Un título descriptivo que resuma el punto.
+        - "descripcion": Una descripción detallada y completa del punto, de al menos 800 caracteres, utilizando un lenguaje natural y evitando la repetición del título.
+      
+        Título inicial: "${title}"
+        Descripción inicial: "${descripcion}"
+      
+        Ejemplo de salida deseada basado en un texto orientado a la programación web, considerando el idioma "${language}":
+       
+        {
+          "id": 1,
+          "title": "Introducción",
+          "descripcion": "La programación web ha evolucionado significativamente, permitiendo la creación de sitios y aplicaciones más dinámicas y funcionales. En esta sección se explorarán los conceptos básicos y la importancia de entender la estructura y el funcionamiento de las tecnologías web."
+        },
+    
+         Recuerda, la salida debe ser únicamente el objeto JSON sin ningún texto adicional.
+        ` as const

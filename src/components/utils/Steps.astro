@@ -3,25 +3,20 @@ import Step from './Step.astro'
 ---
 
 <section>
-  <div class='max-w-screen-lg px-4 py-8 sm:px-6 sm:py-12 lg:px-8'>
+  <div class='px-4 py-8 sm:px-6 sm:py-12 lg:px-8'>
     <div class='grid grid-cols-1 gap-y-8'>
       <div
         class='mx-auto max-w-lg text-center ltr:lg:text-left rtl:lg:text-right'
       >
-        <h2 class='text-xl md:text-2xl text-white font-bold'>
+        <h2 class='text-xl text-white font-bold sm:text-2xl'>
           Tres simples pasos
         </h2>
-
-        <p class='mt-4 text-gray-300 text-sm'>
-          Analizaremos el contenido y generaremos un documento base que te
-          ayudará a estructurar tu informe de manera eficiente y profesional
-        </p>
       </div>
 
       <div class='grid grid-cols sm:grid-cols-2 gap-5 md:grid-cols-3'>
         <Step
-          title='Subir texto o PDF'
-          descripcion='Sube un texto o archivo PDF.'
+          title='Ingresa un texto'
+          descripcion='De al menos 500 caracteres.'
         >
           <svg
             class='h-6 w-6'

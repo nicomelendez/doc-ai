@@ -1,46 +1,8 @@
 ---
-import Error from '@/components/icons/Error.astro'
+import Error from '@/components/utils/Error.astro'
 import Layout from '@/layouts/Layout.astro'
 ---
 
 <Layout title='Doc AI - Página no encontrada'>
-  <!-- Componente de https://www.hyperui.dev/ -->
-  <div class='grid place-content-center px-4 h-full'>
-    <div class='text-center'>
-      <Error />
-      <h1 class='mt-6 text-2xl font-bold tracking-tight text-white sm:text-4xl'>
-        Página no encontrada
-      </h1>
-
-      <p class='my-4 text-gray-400'>
-        Verifica la URL o vuelve a la página principal.
-      </p>
-      <a
-        class='group relative inline-flex items-center overflow-hidden rounded px-8 py-3 text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800'
-        href='/'
-      >
-        <span class='absolute -start-full transition-all group-hover:start-4'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='24'
-            height='24'
-            fill='none'
-            stroke='currentColor'
-            stroke-width='2'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-            class='icon icon-tabler icons-tabler-outline icon-tabler-home'
-            ><path d='M0 0h24v24H0z' stroke='none'></path><path
-              d='M5 12H3l9-9 9 9h-2M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7'
-            ></path><path d='M9 21v-6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v6'
-            ></path></svg
-          >
-        </span>
-
-        <span class='text-sm font-medium transition-all group-hover:ms-4'>
-          Inicio
-        </span>
-      </a>
-    </div>
-  </div>
+  <Error/>
 </Layout>

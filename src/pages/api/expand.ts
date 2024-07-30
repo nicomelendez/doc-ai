@@ -1,5 +1,5 @@
 import { type APIRoute } from 'astro'
-import { analyzeInfo } from '@/lib/ai-summary.ts'
+import { analyzeAndExpandInfo } from '@/lib/ai-summary.ts'
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -8,7 +8,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     const jsonBody = JSON.parse(body)
 
-    const context = await analyzeInfo(jsonBody.info)
+    const context = await analyzeAndExpandInfo(jsonBody.info)
 
     return new Response(JSON.stringify(context), { status: 200 })
   } catch (error) {

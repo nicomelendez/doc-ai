@@ -7,7 +7,11 @@ export enum Lenguaje {
 export enum Idioma {
   Espanol = 'Español',
   Ingles = 'Inglés',
-  Frances = 'Francés',
+}
+
+export interface SelectProps {
+  label: string
+  options: Record<string, string>
 }
 
 export interface Config {
@@ -20,7 +24,6 @@ export interface Pointer {
   id: number
   title: string
   descripcion: string
-  ask: string
 }
 
 export interface Ask {
@@ -35,6 +38,7 @@ export interface AnalysisResponse {
 }
 
 export interface ContextResponse {
+  context: String | ''
   asks: Ask[]
 }
 
