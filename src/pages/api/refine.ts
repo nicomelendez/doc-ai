@@ -9,7 +9,6 @@ export const POST: APIRoute = async ({ request }) => {
     const { contextInfo, responses } = JSON.parse(body)
 
     const context = await refineContext(contextInfo, responses)
-    console.log(context)
 
     return new Response(JSON.stringify(context), { status: 200 })
   } catch (error) {
