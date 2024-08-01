@@ -3,7 +3,6 @@ import Layout from '@/layouts/Layout.astro'
 import Formulario from '@/components/Formulario.jsx'
 import Input from '@/components/Input.astro'
 import Steps from '@/components/utils/Steps.astro'
-import StreamingContext from '@/components/StreamingContext'
 ---
 
 <Layout title='Doc AI - Genera informes profesionales en minutos'>
@@ -11,22 +10,31 @@ import StreamingContext from '@/components/StreamingContext'
     <div class='pt-10'>
       <div class='mx-auto text-center max-w-[630px] lg:max-w-[800px]'>
         <h1
-          class='text-3xl text-white font-bold sm:text-4xl leading-relaxed pb-3'
+          class='text-2xl xs:text-3xl text-white font-bold sm:text-4xl leading-relaxed pb-3'
         >
-          Genera informes de manera sencilla y rápida
+          Obten un documento inicial en unos clicks
         </h1>
         <p class='text-slate-300 text-sm lg:text-base text-pretty'>
-          Ingresa un texto de al menos 500 caracteres sobre el tema que
-          necesitas, y recibe un documento que puedes usar como base para tus
-          informes académicos, escolares o laborales.
+          Proporciona la información sobre un tema y obtén un documento Word
+          para seguir editando.
         </p>
       </div>
       <Formulario client:load>
         <Input />
       </Formulario>
 
-      <StreamingContext client:load />
+      <div class='text-white flex flex-col items-center py-10'>
+        <h3 class='font-semibold pb-5 text-center'>
+          ¿No tienes un texto que explaye tu tema?
+        </h3>
+        <a
+          class='inline-block rounded bg-blue-600 px-4 py-2 text-xs font-medium text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-blue-500'
+          href='/generar'
+        >
+          Genera uno
+        </a>
+      </div>
     </div>
-    <!-- <Steps /> -->
+    <Steps />
   </section>
 </Layout>
