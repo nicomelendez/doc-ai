@@ -55,7 +55,7 @@ ${info}
 
 **Nota:** La salida debe ser únicamente el objeto JSON en el formato especificado, sin ningún texto adicional. Asegúrate de que todos los puntos sean detallados y que la bibliografía contenga enlaces válidos.
 
-Recuerda, cualquier texto adicional fuera del objeto JSON debe ser evitado. El JSON generado debe cumplir con los requisitos mencionados.
+Recuerda, los links de la fuente de donde lo sacaste y ponerlo en bibliografia y cualquier texto adicional fuera del objeto JSON debe ser evitado.
 ` as const
 
 export const getPromptContext = (
@@ -113,35 +113,6 @@ export const refineContextPrompt = (
       La salida final debe ser un objeto JSON que contenga exclusivamente el contexto refinado, sin texto adicional. Asegúrate de que el contexto cumpla con el mínimo de caracteres requerido y refleje un entendimiento profundo del propósito del usuario.
       ` as const
 
-/* export const expandPoint = (
-  title: String,
-  descripcion: String,
-  language: String
-) =>
-  `
-        Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Este JSON se usará como base para crear un documento estructurado en formato Markdown. Considerando que estás ayudando a preparar un documento Word para un informe de tarea, necesitamos estructurar la información.
-      
-        **Idioma:** Debes generar el contenido en "${language}", teniendo en cuenta las normas ortográficas y gramaticales de dicho idioma. Utiliza un lenguaje natural y fluido, evitando repetir lo que ya dice el título. Tampoco vuelvas a hablar de lo mismo que hablaste en el anterior. Enfócate en explicar las ideas de manera clara y concisa, como si estuvieras redactando un documento real y no repitas contenido.
-      
-        **Instrucciones para el JSON:**
-        - "id": Debe ser un identificador único para cada punto usando UUID.
-        - "title": Un título descriptivo que resuma el punto.
-        - "descripcion": Una descripción detallada y completa del punto, de al menos 800 caracteres, utilizando un lenguaje natural y evitando la repetición del título.
-      
-        Título inicial: "${title}"
-        Descripción inicial: "${descripcion}"
-
-        Ejemplo de salida deseada basado en un texto orientado a la programación web, considerando el idioma "${language}":
-        Estos datos SON EJEMPLOS
-        
-        {
-          "id": "c0c1c2c3-1234-5678-90ab-cdefghij",
-          "title": "Introducción",
-          "descripcion": "La programación web ha evolucionado significativamente, permitiendo la creación de sitios y aplicaciones más dinámicas y funcionales. En esta sección se explorarán los conceptos básicos y la importancia de entender la estructura y el funcionamiento de las tecnologías web."
-        }
-    
-         Recuerda, la salida debe ser únicamente el objeto JSON sin ningún texto adicional.
-        ` as const */
 export const expandPoint = (
   title: String,
   descripcion: String,

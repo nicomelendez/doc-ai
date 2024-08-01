@@ -44,12 +44,12 @@ export interface ContextResponse {
 
 export interface StoreState {
   analysisResponse: AnalysisResponse | null
-  setAnalysisResponse: (response: AnalysisResponse) => void
   contextResponse: ContextResponse | null
-  setContextResponse: (response: ContextResponse) => void
-  getContext: () => ContextResponse | null
-  getAnalysis: () => AnalysisResponse | null
   config: Config | null
+  setAnalysisResponse: (response: AnalysisResponse) => void
+  setContextResponse: (response: ContextResponse) => void
   setConfig: (config: Partial<Config>) => void
+  getAnalysis: () => AnalysisResponse | null
+  getContext: () => ContextResponse | null
   getConfig: () => Config | null
 }
