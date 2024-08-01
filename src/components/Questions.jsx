@@ -11,41 +11,31 @@ export default function Questions() {
   )
   const [loading, setLoading] = useState(false)
 
-  if (contextResponse == null) {
-    return (
-      <div className='text-white text-2xl font-bold text-center py-10'>
-        Algo malo salio
-      </div>
-    )
-  }
-
-  const data = JSON.parse(contextResponse.contextResponse)
-
   async function handleSubmit(e) {
     e.preventDefault()
     setLoading(false)
     const fields = Object.fromEntries(new FormData(e.target))
 
-    const requestBody = getRequestBody(fields, data)
-    setLoading(true)
+    const requestBody = getRequestBody(fields, contextResponse)
 
     try {
+      setLoading(true)
       const refinedContext = await refine(requestBody)
-
       if (refinedContext == null) {
         setLoading(false)
         alert('Algo fallo en analizar en el refinado')
         return
       }
-
+      const responseAnalized = await analyze(refinedContext)
+      console.log(responseAnalized)
       localStorage.setItem(
         'context',
-        JSON.stringify({ context: refinedContext, asks: data.asks })
+        JSON.stringify({ context: refinedContext, asks: contextResponse.asks })
       )
-      setContextResponse({ contextResponse: refinedContext, asks: data.asks })
-
-      const responseAnalized = await analyze(refinedContext)
-
+      setContextResponse({
+        contextResponse: refinedContext,
+        asks: contextResponse.asks,
+      })
       localStorage.setItem('analyze', JSON.stringify(responseAnalized))
       setAnalysisResponse({ analysisResponse: responseAnalized })
 
@@ -53,11 +43,20 @@ export default function Questions() {
       window.location.href = '/preview'
     } catch (error) {
       console.error('Error posting to API:', error)
+      alert('Algo fallo la api')
     }
   }
 
+  if (contextResponse == null) {
+    return (
+      <div className='text-white text-2xl font-bold text-center py-10'>
+        <Loading />
+      </div>
+    )
+  }
+
   return (
-    <section className='max-w-[1200px] space-y-10 '>
+    <section className='max-w-[700px] space-y-10 pb-20 md:pb-10'>
       {loading ? (
         <Loading />
       ) : (
@@ -65,7 +64,7 @@ export default function Questions() {
           onSubmit={handleSubmit}
           className='w-full max-w-[1000px] space-y-10 '
         >
-          {data.asks.map((item) => {
+          {contextResponse.asks.map((item) => {
             if (item.ask !== '') {
               return (
                 <div className='text-white' key={item.id}>

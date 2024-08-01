@@ -5,7 +5,7 @@ import {
   refineContextPrompt,
   expandPoint,
 } from './const'
-import type { AnalysisResponse, Ask, Pointer } from './types'
+import type { AnalysisResponse, Ask, Pointer, Config } from './types'
 import { OpenAIStream, StreamingTextResponse } from 'ai' // Vercel AI SDK ***
 
 const perplexity = new OpenAI({
@@ -24,7 +24,7 @@ export function buildPrompt(
   ]
 }
 
-export async function analyzeUserInfo(info: string) {
+/* export async function analyzeUserInfo(info: string) {
   const prompt = `
     Generame un texto de almenos 100 caracteres sobre esto:
     ${info}
@@ -45,14 +45,14 @@ export async function analyzeUserInfo(info: string) {
 
   const streamingResponse = new StreamingTextResponse(stream)
   return await streamingResponse.text()
-}
- 
+} */
+
 export async function analyzeInfo(info: String) {
   try {
     const prompt = getPromptAnalyze(info)
 
     const query = {
-      model: 'llama-3-sonar-large-32k-chat',
+      model: 'llama-3.1-70b-instruct',
       messages: buildPrompt(prompt),
       max_tokens: 10000,
       temperature: 0.75,
@@ -72,12 +72,13 @@ export async function analyzeInfo(info: String) {
   }
 }
 
-export async function contextInfo(info: String) {
+export async function contextInfo(info: String, config: Config) {
+  console.log(config)
   try {
     const prompt = getPromptContext(
       info,
       'Un reporte para la universidad',
-      'Semiformal'
+      config.lenguaje.toString()
     )
 
     const query = {
@@ -141,12 +142,17 @@ export async function refineContext(originalContext: String, responses: Ask[]) {
   }
 }
 
-export async function expandPointDetails(title: String, descripcion: String) {
-  const prompt = expandPoint(title, descripcion, 'Español')
+export async function expandPointDetails(
+  title: String,
+  descripcion: String,
+  id: String
+) {
+  const prompt = expandPoint(title, descripcion, 'Español', id)
+
   const query = {
-    model: 'llama-3-sonar-large-32k-chat',
+    model: 'llama-3.1-70b-instruct',
     messages: buildPrompt(prompt),
-    max_tokens: 7000,
+    max_tokens: 10000,
     temperature: 0.75,
     frequency_penalty: 1,
   }
@@ -154,14 +160,21 @@ export async function expandPointDetails(title: String, descripcion: String) {
   try {
     const response = await perplexity.chat.completions.create(query)
     const textResponse = response.choices[0].message.content
-
+    console.log('----TextResponse')
+    console.log(textResponse)
+    console.log('--------------')
     if (textResponse == null || textResponse.trim() === '') {
       console.error('No response or empty response received.')
       return
     }
+    let objeto
+    try {
+      objeto = JSON.parse(textResponse)
+    } catch (error) {
+      console.log('No se parseo bien')
+      objeto = { title, descripcion }
+    }
 
-    const objeto = JSON.parse(textResponse)
-    console.log(objeto)
     return objeto
   } catch (error) {
     console.error('Failed to expand point details:', error)
@@ -170,14 +183,20 @@ export async function expandPointDetails(title: String, descripcion: String) {
 }
 
 export async function analyzeAndExpandInfo(initialPoints: AnalysisResponse) {
+  console.log(initialPoints)
   const expandedPoints = await Promise.all(
-    initialPoints.pointers.map(async (point: Pointer) => {
-      const pointer = await expandPointDetails(point.title, point.descripcion)
-      return pointer
+    initialPoints.pointers.map(async (point) => {
+      if (point == null) return
+      return await expandPointDetails(
+        point.title,
+        point.descripcion,
+        point.id.toString()
+      )
     })
   )
-  const markdown = await jsonToMarkdown(expandedPoints)
-  console.log(markdown)
+  console.log(expandedPoints)
+  /* const markdown = await jsonToMarkdown(expandedPoints)
+  console.log(markdown) */
   return expandedPoints
 }
 async function jsonToMarkdown(jsonData: any) {
@@ -202,7 +221,7 @@ async function jsonToMarkdown(jsonData: any) {
   Recuerda que solo quiero un documento markdown sin nada más adicional`
 
   const query = {
-    model: 'llama-3-sonar-large-32k-chat',
+    model: 'llama-3.1-70b-instruct',
     messages: buildPrompt(prompt),
     max_tokens: 10000,
     temperature: 0.75,

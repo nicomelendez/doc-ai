@@ -3,10 +3,14 @@ import React, { useState } from 'react'
 export default function StreamingContext() {
   const [responseText, setResponseText] = useState('')
   const [loading, setLoading] = useState(false)
-
+  function showModal() {
+    const modal = document.getElementById('modal')
+    if (modal?.style == null) return
+    modal.style.display = 'block'
+  }
   async function get() {
     setLoading(true)
-    setResponseText('') // Limpiar el texto anterior
+    setResponseText('')
     try {
       const response = await fetch('/api/consult', {
         method: 'POST',
@@ -28,9 +32,9 @@ export default function StreamingContext() {
         const { value, done: doneReading } = await reader.read()
         done = doneReading
         const chunk = decoder.decode(value, { stream: true })
-        
+
         // Remover formato no deseado y concatenar texto
-        setResponseText(prev => prev + chunk.replace(/(\d+:"|")/g, ''))
+        setResponseText((prev) => prev + chunk.replace(/(\d+:"|")/g, ''))
       }
     } catch (error) {
       console.error('Error fetching data:', error)
@@ -40,11 +44,20 @@ export default function StreamingContext() {
   }
 
   return (
-    <div className='text-white'>
-      <button onClick={get} disabled={loading}>
+    <div className='text-white flex flex-col items-center py-10'>
+      <h3 className='font-semibold pb-5 text-center'>
+        ¿No tienes un texto que explaye tu tema?
+      </h3>
+      <button
+        className='inline-block rounded bg-blue-600 px-4 py-2 text-xs font-medium text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-blue-500'
+        onClick={showModal}
+      >
+        Genera uno
+      </button>
+      {/* <button onClick={get} disabled={loading}>
         {loading ? 'Cargando...' : 'Enviar'}
       </button>
-      {responseText && <div className='response text-sm'>{responseText}</div>}
+      {responseText && <div className='response text-sm'>{responseText}</div>} */}
     </div>
   )
 }
