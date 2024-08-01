@@ -21,6 +21,7 @@ export default function Questions() {
     try {
       setLoading(true)
       const refinedContext = await refine(requestBody)
+      console.log(refinedContext)
       if (refinedContext == null) {
         setLoading(false)
         alert('Algo fallo en analizar en el refinado')

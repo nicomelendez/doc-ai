@@ -150,48 +150,30 @@ export async function contextInfo(info: String, config: Config) {
 export async function refineContext(originalContext: String, responses: Ask[]) {
   let refinedContext = originalContext
 
+  const prompt = refineContextPrompt(refinedContext, responses)
+
+  const query = {
+    model: 'llama-3.1-70b-instruct',
+    messages: buildPrompt(prompt),
+    max_tokens: 5000,
+    temperature: 0.75,
+    frequency_penalty: 1,
+  } as const
+
   try {
-    for (const item of responses) {
-      const { ask, response } = item
+    const responseAPI = await perplexity.chat.completions.create(query)
+    const textResponse = responseAPI.choices[0].message.content
 
-      if (!ask || !response) {
-        console.error('Invalid ask or response:', item)
-        continue // Saltar este elemento y continuar con el siguiente
-      }
+    if (!textResponse || textResponse.trim() === '') {
+      console.error('No response or empty response received for query:', query)
+      return refinedContext
+    }
 
-      const prompt = refineContextPrompt(refinedContext, ask, response || '')
-
-      const query = {
-        model: 'llama-3-sonar-large-32k-chat',
-        messages: buildPrompt(prompt),
-        max_tokens: 8000,
-        temperature: 0.75,
-        frequency_penalty: 1,
-      } as const
-
-      try {
-        const responseAPI = await perplexity.chat.completions.create(query)
-        const textResponse = responseAPI.choices[0].message.content
-
-        if (!textResponse || textResponse.trim() === '') {
-          console.error(
-            'No response or empty response received for query:',
-            query
-          )
-          continue // Saltar este elemento y continuar con el siguiente
-        }
-
-        try {
-          const jsonResponse = JSON.parse(textResponse)
-          refinedContext = jsonResponse.context
-        } catch (jsonError) {
-          console.error('Error parsing JSON response:', textResponse, jsonError)
-          continue // Saltar este elemento y continuar con el siguiente
-        }
-      } catch (apiError) {
-        console.error('Error in API request:', apiError)
-        continue // Saltar este elemento y continuar con el siguiente
-      }
+    try {
+      const jsonResponse = JSON.parse(textResponse)
+      refinedContext = jsonResponse.context
+    } catch (jsonError) {
+      console.error('Error parsing JSON response:', textResponse, jsonError)
     }
 
     return refinedContext

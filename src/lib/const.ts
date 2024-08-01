@@ -1,3 +1,5 @@
+import type { Ask } from './types'
+
 export const getPromptAnalyze = (info: String) =>
   `
 Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Este JSON se usará para crear un documento estructurado en formato Markdown, que luego se convertirá en un archivo Word bien formateado. El documento Word final será utilizado por el usuario para entregar un informe académico a su universidad o escuela, asegurando que el contenido esté organizado, claro y semiformal.
@@ -91,19 +93,20 @@ export const getPromptContext = (
 
 export const refineContextPrompt = (
   originalContext: String,
-  ask: String,
-  response: String
+  responses: Ask[]
 ) =>
   `
-      Utiliza esta información para analizar y generar exclusivamente un objeto JSON. Que refine el contexto original basado en la interacción específica con el usuario. La tarea implica comprender y ajustar el contexto para alinearlo mejor con las necesidades y respuestas del usuario, lo que resulta en una presentación más precisa y personalizada del documento.
+      Utiliza esta información para analizar y generar exclusivamente un objeto JSON. La tarea implica comprender y ajustar el contexto para alinearlo mejor con las necesidades y respuestas del usuario, lo que resulta en una presentación más precisa del enfoque deseado del usuario.
       
       Contexto original: ${originalContext}
-      ----
-      Pregunta realizada: ${ask}
-      ----
-      Respuesta del usuario: ${response}
 
-      Basado en este diálogo, genera un contexto refinado que integre de manera coherente y detallada las preferencias y especificaciones expresadas por el usuario. El contexto refinado debe ser sustancial y desarrollado, con un mínimo de 1000 caracteres para asegurar una cobertura completa y detallada.
+      ----
+      ${responses.map((item: Ask) => {
+        return `Pregunta número ${item.id} realizada: ${item.ask} / Respuesta de la pregunta número ${item.id}: ${item.response}`
+      })}
+      ----
+
+      Genera un contexto más enfocado de la manera más coherente y detallada con un mínimo de 1000 caracteres para asegurar una cobertura completa y detallada.
       
       Ejemplo de salida deseada:
       {
