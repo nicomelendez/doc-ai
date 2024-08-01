@@ -8,7 +8,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     const jsonBody = JSON.parse(body)
 
-    const context = await contextInfo(jsonBody.info)
+    const context = await contextInfo(jsonBody.info, jsonBody.config)
 
     return new Response(JSON.stringify(context), { status: 200 })
   } catch (error) {

@@ -32,15 +32,15 @@ export default function SaveLocalStore() {
   useEffect(() => {
     const analyzeString = localStorage.getItem('analyze')
     if (analyzeString != null) {
-      setAnalysisResponse({ analysisResponse: analyzeString })
+      setAnalysisResponse(JSON.parse(analyzeString))
     }
     const contextString = localStorage.getItem('context')
     if (contextString != null) {
-      setContextResponse({ contextResponse: contextString })
+      setContextResponse(JSON.parse(contextString))
     }
     const configString = localStorage.getItem('config')
     if (configString != null) {
-      setConfig({ config: configString })
+      setConfig(JSON.parse(configString))
     }
   }, [])
 

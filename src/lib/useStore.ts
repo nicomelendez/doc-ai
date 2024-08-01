@@ -21,6 +21,13 @@ const useStore = create<StoreState>((set: any) => ({
     }
     return null
   },
+  getAnalysis: () => {
+    const state: StoreState = useStore.getState()
+    if (state.analysisResponse) {
+      return state.analysisResponse
+    }
+    return null
+  },
   setConfig: (newConfig: any) =>
     set((state: any) => ({
       config: { ...state.config, ...newConfig },
