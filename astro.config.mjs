@@ -12,7 +12,9 @@ export default defineConfig({
   },
   integrations: [tailwind(), react()],
   output: 'server',
-  adapter: vercel(),
+  adapter: vercel({
+    maxDuration: 30,
+  }),
   vite: {
     build: {
       cssMinify: 'lightningcss',
