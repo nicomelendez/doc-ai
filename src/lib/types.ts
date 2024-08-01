@@ -48,7 +48,8 @@ export interface StoreState {
   contextResponse: ContextResponse | null
   setContextResponse: (response: ContextResponse) => void
   getContext: () => ContextResponse | null
-  config: Config
+  getAnalysis: () => AnalysisResponse | null
+  config: Config | null
   setConfig: (config: Partial<Config>) => void
   getConfig: () => Config | null
 }

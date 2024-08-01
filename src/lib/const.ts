@@ -1,24 +1,31 @@
 export const getPromptAnalyze = (info: String) =>
   `
-Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Este JSON se usará como base para crear un documento estructurado en formato Markdown, que luego se convertirá en un archivo Word bien formateado. El documento Word final será utilizado por el usuario para entregar un informe académico a su universidad o escuela, asegurando que el contenido esté organizado, claro y semiformal.
+Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Este JSON se usará para crear un documento estructurado en formato Markdown, que luego se convertirá en un archivo Word bien formateado. El documento Word final será utilizado por el usuario para entregar un informe académico a su universidad o escuela, asegurando que el contenido esté organizado, claro y semiformal.
 
-Debes utilizar un lenguaje natural y fluido, no repetir lo que mismo que dice el título. Enfócate en explicar las ideas de manera clara y concisa, como si estuvieras redactando un documento real. Además, el documento debe incluir al menos 7 puntos y una sección adicional de bibliografía, donde deberás citar las fuentes utilizadas.
+**Instrucciones para el JSON:**
 
-Debe de tener al menos 7 puntos y más uno extra que es una bibliografía donde deberas poner las URLS de los sitios o recursos que usaste para la información del documento.
+- **status:** Indica "analizando" si alguno de los puntos contiene preguntas y "completo" si no hay preguntas.
+- **pointers:** Un arreglo de objetos, donde cada objeto representa un punto del texto con la siguiente estructura:
+  - **id:** Un identificador único para cada punto.
+  - **title:** Un título descriptivo que resuma el punto.
+  - **descripcion:** Una descripción detallada y completa del punto, de al menos 800 caracteres, utilizando un lenguaje natural y evitando la repetición del título.
 
-El JSON debe incluir los siguientes campos:
+Además, el JSON debe incluir una sección de bibliografía con enlaces reales a fuentes que validen algunos o todos los puntos mencionados. La bibliografía debe tener al menos tres referencias y estar en el siguiente formato:
 
-- "status": Indica "analizando" si algún punto contiene preguntas y "completo" si no hay preguntas.
-- "pointers": Un arreglo de objetos, donde cada objeto representa un punto del texto con la siguiente estructura:
-  - "id": Un identificador único para cada punto.
-  - "title": Un título descriptivo que resuma el punto.
-  - "descripcion": Una descripción detallada y completa del punto, de al menos 800 caracteres, utilizando un lenguaje natural y evitando la repetición del título.
+- **Bibliografía:** Un objeto dentro del arreglo 'pointers' con:
+  - **title:** "Bibliografía".
+  - **descripcion:** Una lista de enlaces válidos y accesibles, citando las fuentes utilizadas.
 
-Aquí está el texto:
+**Requisitos adicionales:**
+
+- El JSON debe tener al menos 8 puntos de información.
+- Asegúrate de que cada punto esté bien documentado y que la bibliografía contenga enlaces que validen la información.
+
+Aquí está el texto para analizar:
 
 ${info}
 
-Ejemplo de salida deseada basado en un texto orientado a la programación web:
+**Ejemplo de salida deseada basado en un texto orientado a la programación web:**
 
 {
   "status": "analizando",
@@ -37,11 +44,18 @@ Ejemplo de salida deseada basado en un texto orientado a la programación web:
       "id": 3,
       "title": "Buenas prácticas",
       "descripcion": "Adoptar buenas prácticas en programación web es esencial para mantener el código organizado y eficiente. Esto incluye el uso de control de versiones, la adherencia a estándares de codificación y la implementación de pruebas automatizadas. Estas prácticas no solo mejoran la calidad del código, sino que también facilitan su mantenimiento y escalabilidad."
+    },
+    {
+      "id": 4,
+      "title": "Bibliografía",
+      "descripcion": "- [Artículo de revista especializada](https://example.com/articulo1) - [Libro de texto](https://example.com/libro1) - [Sitio web confiable](https://example.com/sitio1)"
     }
   ]
 }
 
-Recuerda, la salida debe ser únicamente el objeto JSON sin ningún texto adicional.
+**Nota:** La salida debe ser únicamente el objeto JSON en el formato especificado, sin ningún texto adicional. Asegúrate de que todos los puntos sean detallados y que la bibliografía contenga enlaces válidos.
+
+Recuerda, cualquier texto adicional fuera del objeto JSON debe ser evitado. El JSON generado debe cumplir con los requisitos mencionados.
 ` as const
 
 export const getPromptContext = (
@@ -99,7 +113,7 @@ export const refineContextPrompt = (
       La salida final debe ser un objeto JSON que contenga exclusivamente el contexto refinado, sin texto adicional. Asegúrate de que el contexto cumpla con el mínimo de caracteres requerido y refleje un entendimiento profundo del propósito del usuario.
       ` as const
 
-export const expandPoint = (
+/* export const expandPoint = (
   title: String,
   descripcion: String,
   language: String
@@ -110,20 +124,52 @@ export const expandPoint = (
         **Idioma:** Debes generar el contenido en "${language}", teniendo en cuenta las normas ortográficas y gramaticales de dicho idioma. Utiliza un lenguaje natural y fluido, evitando repetir lo que ya dice el título. Tampoco vuelvas a hablar de lo mismo que hablaste en el anterior. Enfócate en explicar las ideas de manera clara y concisa, como si estuvieras redactando un documento real y no repitas contenido.
       
         **Instrucciones para el JSON:**
-        - "id": Debe ser un identificador único para cada punto.
+        - "id": Debe ser un identificador único para cada punto usando UUID.
         - "title": Un título descriptivo que resuma el punto.
         - "descripcion": Una descripción detallada y completa del punto, de al menos 800 caracteres, utilizando un lenguaje natural y evitando la repetición del título.
       
         Título inicial: "${title}"
         Descripción inicial: "${descripcion}"
-      
+
         Ejemplo de salida deseada basado en un texto orientado a la programación web, considerando el idioma "${language}":
-       
+        Estos datos SON EJEMPLOS
+        
         {
-          "id": 1,
+          "id": "c0c1c2c3-1234-5678-90ab-cdefghij",
           "title": "Introducción",
           "descripcion": "La programación web ha evolucionado significativamente, permitiendo la creación de sitios y aplicaciones más dinámicas y funcionales. En esta sección se explorarán los conceptos básicos y la importancia de entender la estructura y el funcionamiento de las tecnologías web."
-        },
+        }
     
          Recuerda, la salida debe ser únicamente el objeto JSON sin ningún texto adicional.
-        ` as const
+        ` as const */
+export const expandPoint = (
+  title: String,
+  descripcion: String,
+  language: String,
+  id: String
+) =>
+  `
+      Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Este JSON se usará para estructurar un documento en formato Markdown, como si estuvieras redactando un informe de tarea.
+
+      **Idioma:** Genera el contenido en "${language}", respetando las normas ortográficas y gramaticales del idioma. Usa un lenguaje natural y fluido. Evita repetir información del título o de la descripción inicial y no repitas contenido ya mencionado.
+
+      **Instrucciones para el JSON:**
+      - "id": Debe ser el mismo que estan en este ejemplo.
+      - "title": Un título descriptivo que resuma el punto.
+      - "descripcion": Una descripción detallada del punto, de al menos 800 caracteres, usando un lenguaje natural y evitando la repetición del título.
+
+      Título inicial: "${title}"
+      Descripción inicial: "${descripcion}"
+
+      **Ejemplo de salida deseada en "${language}":**
+
+      {
+        "id": ${id},
+        "title": "Introducción",
+        "descripcion": "La programación web ha evolucionado significativamente, permitiendo la creación de sitios y aplicaciones más dinámicas y funcionales. En esta sección se explorarán los conceptos básicos y la importancia de entender la estructura y el funcionamiento de las tecnologías web."
+      }
+
+      **Nota:** La salida debe ser exclusivamente el objeto JSON en el formato especificado, sin ningún texto adicional.
+
+      **Recuerda:** Cualquier texto adicional fuera del objeto JSON debe ser evitado. Asegúrate de que el JSON generado cumpla con los requisitos mencionados.
+  ` as const
