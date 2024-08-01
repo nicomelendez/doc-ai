@@ -224,6 +224,7 @@ export async function expandPointDetails(
 }
 
 export async function analyzeAndExpandInfo(initialPoints: AnalysisResponse) {
+  console.log("Holaaaa")
   console.log(initialPoints)
   const expandedPoints = await Promise.all(
     initialPoints.pointers.map(async (point) => {
@@ -236,46 +237,6 @@ export async function analyzeAndExpandInfo(initialPoints: AnalysisResponse) {
     })
   )
   console.log(expandedPoints)
-  /* const markdown = await jsonToMarkdown(expandedPoints)
-  console.log(markdown) */
   return expandedPoints
 }
-async function jsonToMarkdown(jsonData: any) {
-  const prompt = `Genera un documento en Markdown utilizando la siguiente información estructurada en JSON:
-  ${JSON.stringify(jsonData, null, 2)}
-  
-  Instrucciones detalladas:
-  - **Evitar Redundancias en Títulos**: Utiliza títulos únicos para cada sección. Si un subtítulo repite información del título principal, intégralo en la descripción en lugar de listar como subtítulo separado.
-  - **Consistencia Idiomática**: Mantén la coherencia en el uso del idioma, asegurándote de utilizar una ortografía y gramática correctas en español. Corrige términos incorrectos como "various" a "varios".
-  - **Optimización de Longitud**: Condensa la información para mantener las secciones informativas y concisas, evitando redundancias. Céntrate en mantener la claridad y eliminar duplicaciones innecesarias.
-  - **Inclusión de URLs en Bibliografía**: Asegúrate de que todas las URLs en la bibliografía estén en formato de enlace clicable, usando Markdown.
-  
-  Explicación del formato Markdown deseado:
-  - **'#' para títulos de secciones**: Usa un solo hash '#' para títulos principales de cada sección, lo cual los convierte en encabezados de nivel uno en Markdown, destacándolos como los más importantes.
-  - **'##' para subsecciones**: Usa dos hashes '##' para subsecciones dentro de cada sección principal, creando así encabezados de nivel dos, que son subordinados a los títulos principales.
-  - **Descripciones largas**: Estas deben seguir directamente a cada título o subtítulo y estar formateadas como texto normal sin marcadores adicionales.
-  - **Listas y puntos**: Utiliza guiones '-' para listas no ordenadas donde sea relevante, para organizar la información de forma que sea fácilmente digestible.
-  - **Enlaces clicable en la bibliografía**: Formatea los enlaces como [Nombre del Sitio](URL) para asegurar que sean interactivos y accesibles.
-  
-  Por favor, sigue estas instrucciones para crear un documento estructurado, informativo y fácil de navegar. 
-  
-  Recuerda que solo quiero un documento markdown sin nada más adicional`
 
-  const query = {
-    model: 'llama-3.1-70b-instruct',
-    messages: buildPrompt(prompt),
-    max_tokens: 10000,
-    temperature: 0.75,
-    frequency_penalty: 1,
-  }
-
-  try {
-    const response = await perplexity.chat.completions.create(query)
-    const markdownResponse = response.choices[0].message.content
-    if (!markdownResponse) throw new Error('No Markdown response received.')
-    return markdownResponse
-  } catch (error) {
-    console.error('Failed to generate Markdown:', error)
-    return null
-  }
-}

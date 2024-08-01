@@ -4,12 +4,12 @@ import { Document, Packer, Paragraph, TextRun } from 'docx';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const body = await request.text();
-    if (!body) return new Response('No body data', { status: 400 });
-
-    const jsonBody = JSON.parse(body);
-
-    const context = await analyzeAndExpandInfo(jsonBody.info);
+    const jsonBody = await request.json();
+    if (!jsonBody) return new Response('No body data', { status: 400 });
+    console.log("desde la api")
+    console.log(jsonBody)
+    console.log("-------------------------")
+    const context = await analyzeAndExpandInfo(jsonBody.info.analysisResponse);
 
     const docBuffer = await jsonToWord(context);
 
