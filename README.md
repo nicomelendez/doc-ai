@@ -24,7 +24,7 @@ Aplicación web que **genera documentos** académicos. **Analiza un contexto esp
   nvm use <version>
   ```
 
-- PNPM (es nuestra recomendación por su eficiencia y rapidez)
+- PNPM (recomendado por su eficiencia y rapidez)
 
   ```sh
   npm install -g pnpm
