@@ -3,6 +3,7 @@ import Layout from '@/layouts/Layout.astro'
 import Formulario from '@/components/Formulario.jsx'
 import Input from '@/components/Input.astro'
 import Steps from '@/components/utils/Steps.astro'
+import TextArea from '@/components/TextArea'
 ---
 
 <Layout title='Doc AI - Genera informes profesionales en minutos'>
@@ -20,8 +21,11 @@ import Steps from '@/components/utils/Steps.astro'
         </p>
       </div>
       <Formulario client:load>
-        <Input />
+        <!-- <Input /> -->
+        <TextArea client:load/>
       </Formulario>
+
+    
 
       <div class='text-white flex flex-col items-center py-10'>
         <h3 class='font-semibold pb-5 text-center'>
