@@ -13,7 +13,7 @@ export default defineConfig({
   integrations: [tailwind(), react()],
   output: 'server',
   adapter: vercel({
-    maxDuration: 30,
+    maxDuration: 60,
   }),
   vite: {
     build: {
