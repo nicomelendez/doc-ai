@@ -6,7 +6,7 @@ import {
   expandPoint,
 } from './const'
 import type { AnalysisResponse, Ask, Pointer, Config } from './types'
-import { OpenAIStream, StreamingTextResponse } from 'ai' // Vercel AI SDK ***
+import { OpenAIStream, StreamingTextResponse } from 'ai'
 
 const perplexity = new OpenAI({
   apiKey: import.meta.env.PERPLEXITY_API_KEY || '',
