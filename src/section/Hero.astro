@@ -1,27 +1,22 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import Formulario from '@/components/Formulario.jsx'
-import Input from '@/components/Input.astro'
 import Steps from '@/components/utils/Steps.astro'
 import TextArea from '@/components/TextArea'
+import Title from '@/components/utils/Title'
 ---
 
 <Layout title='Doc AI - Genera informes profesionales en minutos'>
   <section class='flex flex-col justify-center items-center'>
-    <div class='pt-10'>
-      <div class='mx-auto text-center max-w-[630px] lg:max-w-[800px]'>
-        <h1
-          class='text-2xl xs:text-3xl text-white font-bold sm:text-4xl leading-relaxed pb-3'
-        >
-          Obten un documento inicial en unos clicks
-        </h1>
-        <p class='text-slate-300 text-sm lg:text-base text-pretty'>
+    <div class='pt-5'>
+      <div class='mx-auto text-center max-w-[630px] lg:max-w-[800px] min-h-[8.5rem] md:min-h-[5rem]'>
+        <Title client:only />
+        <p class='text-slate-300 text-sm lg:text-base text-pretty animate-fade-in animate-delay-[2s]'>
           Proporciona la información sobre un tema y obtén un documento Word
           para seguir editando.
         </p>
       </div>
       <Formulario client:load>
-        <!-- <Input /> -->
         <TextArea client:load/>
       </Formulario>
 
