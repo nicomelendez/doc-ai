@@ -19,14 +19,14 @@ export default function TextArea() {
           placeholder='La importancia de la inteligencia artificial en la educación y como ...'
         ></textarea>
 
-        <div className='bg-white flex flex-col xs:flex-row items-center justify-between py-1 px-2'>
+        <div className='bg-white flex flex-col xs:flex-row items-center justify-between p-4'>
           <label className='text-xs sm:text-sm text-gray-800'>
             {countCaracter < 200
               ? `Minimo de caracteres ${countCaracter} / 200`
               : ''}
           </label>
 
-          <div className='flex items-center justify-end gap-2 bg-white p-3'>
+          <div className='flex items-center justify-end gap-2 bg-white'>
             <BtnConfig />
 
             <button

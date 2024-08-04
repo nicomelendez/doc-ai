@@ -4,6 +4,7 @@ import Loading from './utils/Loading'
 import Questions from './Questions'
 import { expand } from '@/services/expand.js'
 import Toastify from 'toastify-js'
+import { getToastify } from '@/lib/scripts'
 
 export default function Generar() {
   const { contextResponse, setContextResponse, setAnalysisResponse } = useStore(
@@ -29,21 +30,7 @@ export default function Generar() {
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
     } catch (error) {
-      Toastify({
-        text: 'Hubo un error al crear el documento.',
-        duration: 3000,
-        destination: 'https://github.com/apvarun/toastify-js',
-        newWindow: true,
-        close: true,
-        gravity: 'top', 
-        position: 'center',
-        stopOnFocus: true, 
-        style: {
-          background: 'linear-gradient(to right, #e3342f, #cc1f1a)',
-        },
-        onClick: function () {}, 
-      }).showToast()
-      return
+      getToastify('Hubo un error al crear el documento.')
     }
   }
 
@@ -61,17 +48,13 @@ export default function Generar() {
 
   return (
     <section className='max-w-[700px] space-y-10 pb-20 md:pb-10'>
-      {loading ? (
-        <Loading />
-      ) : (
-        <Questions
-          contextResponse={contextResponse}
-          setContextResponse={setContextResponse}
-          setAnalysisResponse={setAnalysisResponse}
-          setLoading={setLoading}
-          setFinish={setFinish}
-        />
-      )}
+      <Questions
+        contextResponse={contextResponse}
+        setContextResponse={setContextResponse}
+        setAnalysisResponse={setAnalysisResponse}
+        setLoading={setLoading}
+        setFinish={setFinish}
+      />
     </section>
   )
 }
