@@ -14,7 +14,7 @@ export default function TextArea() {
         <textarea
           name='info'
           onChange={count}
-          className='w-full resize-none border-none align-top focus:ring-0 sm:text-sm p-2'
+          className='w-full min-h-[150px] resize-none border-none align-top focus:ring-0 sm:text-sm p-2'
           rows='4'
           placeholder='La importancia de la inteligencia artificial en la educación y como ...'
         ></textarea>

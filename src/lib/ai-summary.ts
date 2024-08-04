@@ -103,50 +103,6 @@ export async function contextInfo(info: String, config: Config) {
   }
 }
 
-/* export async function refineContext(originalContext: String, responses: Ask[]) {
-  let refinedContext = originalContext
-
-  try {
-    for (const item of responses) {
-
-      const { ask, response } = item
-
-      if(!ask || !response){
-        return 
-      }
-      const prompt = refineContextPrompt(refinedContext, ask, response || '')
-
-      const query = {
-        model: 'llama-3-sonar-large-32k-chat',
-        messages: buildPrompt(prompt),
-        max_tokens: 8000,
-        temperature: 0.75,
-        frequency_penalty: 1,
-      } as const
-
-      const responseAPI = await perplexity.chat.completions.create(query)
-      const textResponse = responseAPI.choices[0].message.content
-
-      if (textResponse == null || textResponse.trim() === '') {
-        console.error('No response or empty response received.')
-        return
-      }
-
-      try {
-        const jsonResponse = JSON.parse(textResponse)
-
-        refinedContext = jsonResponse.context
-      } catch (error) {
-        return
-      }
-    }
-
-    return refinedContext
-  } catch (error) {
-    console.error('Error refining context:', error)
-    return null
-  }
-} */
 export async function refineContext(originalContext: String, responses: Ask[]) {
   let refinedContext = originalContext
 
@@ -165,7 +121,6 @@ export async function refineContext(originalContext: String, responses: Ask[]) {
     const textResponse = responseAPI.choices[0].message.content
 
     if (!textResponse || textResponse.trim() === '') {
-      console.error('No response or empty response received for query:', query)
       return refinedContext
     }
 
@@ -173,7 +128,7 @@ export async function refineContext(originalContext: String, responses: Ask[]) {
       const jsonResponse = JSON.parse(textResponse)
       refinedContext = jsonResponse.context
     } catch (jsonError) {
-      console.error('Error parsing JSON response:', textResponse, jsonError)
+      return null
     }
 
     return refinedContext
@@ -201,12 +156,9 @@ export async function expandPointDetails(
   try {
     const response = await perplexity.chat.completions.create(query)
     const textResponse = response.choices[0].message.content
-    console.log('----TextResponse')
-    console.log(textResponse)
-    console.log('--------------')
+
     if (textResponse == null || textResponse.trim() === '') {
-      console.error('No response or empty response received.')
-      return
+      return null
     }
     let objeto
     try {
@@ -224,8 +176,6 @@ export async function expandPointDetails(
 }
 
 export async function analyzeAndExpandInfo(initialPoints: AnalysisResponse) {
-  console.log("Holaaaa")
-  console.log(initialPoints)
   const expandedPoints = await Promise.all(
     initialPoints.pointers.map(async (point) => {
       if (point == null) return

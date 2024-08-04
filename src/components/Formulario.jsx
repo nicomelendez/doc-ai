@@ -39,7 +39,7 @@ export default function Formulario({ children }) {
   }
 
   return (
-    <div className='mx-auto mt-8 max-w-xl md:h-[175px]'>
+    <div className='mx-auto mt-8 max-w-xl'>
       {loading ? (
         <Loading />
       ) : (
