@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fontsource-variable/rubik": "5.0.22",
+    "@github/typing-effect-element": "^0.1.0",
     "ai": "3.2.40",
     "astro": "4.12.3",
     "docx": "^8.5.0",

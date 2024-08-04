@@ -11,6 +11,9 @@ importers:
       '@fontsource-variable/rubik':
         specifier: 5.0.22
         version: 5.0.22
+      '@github/typing-effect-element':
+        specifier: ^0.1.0
+        version: 0.1.0
       ai:
         specifier: 3.2.40
         version: 3.2.40(openai@4.53.2)(react@18.3.1)(sswr@2.1.0(svelte@4.2.18))(svelte@4.2.18)(vue@3.4.34(typescript@5.5.4))(zod@3.23.8)
@@ -977,6 +980,9 @@ packages:
 
   '@fontsource-variable/rubik@5.0.22':
     resolution: {integrity: sha512-QwMlj57+k5+IsShA8q6FECU6zlR4CIm4TAy49GIIiMxxpmRwDXbMynrTp2kBNZmlN4b/myXzSRBnI2DXmnWBJA==}
+
+  '@github/typing-effect-element@0.1.0':
+    resolution: {integrity: sha512-aIAJmnzZ49evO2G5xNNbxypJRV1wir03UyY5mqemjZQMdQW2DGKKn2fjwRLgGNnYlziumd5m3q31hzmY1FmPmw==}
 
   '@img/sharp-darwin-arm64@0.33.4':
     resolution: {integrity: sha512-p0suNqXufJs9t3RqLBO6vvrgr5OhgbWp76s5gTRvdmxmuv9E1rcaqGUsl3l4mKVmXPkTkTErXediAui4x+8PSA==}
@@ -5053,6 +5059,8 @@ snapshots:
     optional: true
 
   '@fontsource-variable/rubik@5.0.22': {}
+
+  '@github/typing-effect-element@0.1.0': {}
 
   '@img/sharp-darwin-arm64@0.33.4':
     optionalDependencies:
