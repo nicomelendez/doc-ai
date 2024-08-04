@@ -9,18 +9,11 @@ import Title from '@/components/utils/Title'
 <Layout title='Doc AI - Genera informes profesionales en minutos'>
   <section class='flex flex-col justify-center items-center'>
     <div class='pt-5'>
-      <div class='mx-auto text-center max-w-[630px] lg:max-w-[800px] min-h-[8.5rem] md:min-h-[5rem]'>
-        <Title client:only />
-        <p class='text-slate-300 text-sm lg:text-base text-pretty animate-fade-in animate-delay-[2s]'>
-          Proporciona la información sobre un tema y obtén un documento Word
-          para seguir editando.
-        </p>
-      </div>
-      <Formulario client:load>
-        <TextArea client:load/>
-      </Formulario>
+      <Title client:only />
 
-    
+      <Formulario client:load>
+        <TextArea client:load />
+      </Formulario>
 
       <div class='text-white flex flex-col items-center py-10'>
         <h3 class='font-semibold pb-5 text-center'>
