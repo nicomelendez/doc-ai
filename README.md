@@ -36,6 +36,28 @@ Aplicación web que **genera documentos** académicos. **Analiza un contexto esp
   npm install npm@latest -g
   ```
 
+### Configuración del Proyecto
+
+Para iniciar el proyecto, necesitas crear un archivo `.env` en el directorio raíz del proyecto con la siguiente variable:
+  
+  - PERPLEXITY_API_KEY = tu_clave_aquí
+
+  
+### Iniciar el Proyecto
+
+Una vez que hayas configurado tu archivo `.env`, puedes iniciar el proyecto usando uno de los siguientes comandos:
+
+### Ejecutar el proyecto:
+
+  ```sh
+  pnpm run dev
+  ```
+
+  O
+
+  ```sh
+  npm run dev
+  ```
 
 ## Stack
 - [![Astro](https://img.shields.io/badge/Astro-0C1222?style=for-the-badge&logo=astro&logoColor=FDFDFE)](https://astro.build/) - Framework de aplicaciones web de código abierto.
