@@ -24,7 +24,11 @@ const { title } = Astro.props
     />
     <meta name='viewport' content='width=device-width' />
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link
+      rel='stylesheet'
+      type='text/css'
+      href='https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css'
+    />
     <title>{title}</title>
     <ViewTransitions />
   </head>
@@ -89,8 +93,8 @@ const { title } = Astro.props
       }
 
       .loader {
-        width: 28px;
-        height: 28px;
+        width: 18px;
+        height: 18px;
         border: 2px solid #fff;
         border-bottom-color: #2563eb;
         border-radius: 50%;
@@ -109,9 +113,11 @@ const { title } = Astro.props
       }
     </style>
     <script>
+      import { $ } from '@/lib/dom-selector'
+
       document.addEventListener('astro:page-load', () => {
-        const modal = document.getElementById('modal')
-        const closeModalButton = document.getElementById('closeModal')
+        const modal = $('#modal')
+        const closeModalButton = $('#closeModal')
 
         if (modal == null || closeModalButton == null) {
           return
@@ -136,6 +142,8 @@ const { title } = Astro.props
         })
       })
     </script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script
+      type='text/javascript'
+      src='https://cdn.jsdelivr.net/npm/toastify-js'></script>
   </body>
 </html>

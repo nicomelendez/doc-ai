@@ -4,11 +4,11 @@ export default function Process({ process }) {
   const getProcessText = (process) => {
     switch (process) {
       case 0:
-        return '1/3 - Refinando el contexto'
+        return '1/3 - Ajustando el contexto'
       case 1:
-        return '2/3 - Generando documento'
+        return '2/3 - Buscando información'
       case 2:
-        return '3/3 - Buscando bibliografías'
+        return '3/3 - Analizando bibliografías'
       default:
         return ''
     }

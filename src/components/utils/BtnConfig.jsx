@@ -1,8 +1,9 @@
+import { $ } from '@/lib/dom-selector'
 import React from 'react'
 
 export default function BtnConfig() {
   function showModal() {
-    const modal = document.getElementById('modal')
+    const modal = $('#modal') 
     if (modal?.style == null) return
     modal.style.display = 'block'
   }
@@ -11,7 +12,7 @@ export default function BtnConfig() {
     <button
       type='button'
       onClick={showModal}
-      className='rounded bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-300'
+      className='rounded  px-3 py-1.5 text-sm font-medium  focus:outline-none border  focus:ring-4  focus:ring-gray-700 bg-gray-800 text-white border-gray-600 hover:bg-gray-700'
     >
       <svg
         xmlns='http://www.w3.org/2000/svg'

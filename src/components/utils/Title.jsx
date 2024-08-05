@@ -6,7 +6,7 @@ export default function Title() {
     '(prefers-reduced-motion: reduce)'
   ).matches
   return (
-    <div class='mx-auto text-center max-w-[630px] lg:max-w-[800px] min-h-[8.5rem] md:min-h-[5rem]'>
+    <div className='mx-auto text-center max-w-[630px] lg:max-w-[800px] min-h-[8.5rem] md:min-h-[6rem]'>
       <h1 className='text-2xl xs:text-3xl md:h-auto text-white font-bold sm:text-4xl leading-relaxed pb-3'>
         <typing-effect data-lines='["Obten un documento inicial en unos clicks"]'>
           <span data-target='typing-effect.content'></span>
