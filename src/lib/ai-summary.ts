@@ -26,17 +26,17 @@ export function buildPrompt(
   ]
 }
 
-/* export async function analyzeUserInfo(info: string) {
+export async function analyzeUserInfo(info: string) {
   const prompt = `
-    Generame un texto de almenos 100 caracteres sobre esto:
-    ${info}
-  `
+  Generame un texto de ni menos 200 caracteres ni mayor a 250 caracteres sobre esto:
+  ${info}
+`
 
   const query = {
-    model: 'llama-3-sonar-large-32k-chat',
+    model: 'llama-3.1-70b-instruct',
     stream: true,
     messages: buildPrompt(prompt),
-    max_tokens: 1000,
+    max_tokens: 2000,
     temperature: 0.75,
     frequency_penalty: 1,
   } as const
@@ -45,9 +45,8 @@ export function buildPrompt(
 
   const stream = OpenAIStream(response)
 
-  const streamingResponse = new StreamingTextResponse(stream)
-  return await streamingResponse.text()
-} */
+  return stream
+}
 
 export async function analyzeInfo(info: String) {
   try {

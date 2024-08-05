@@ -3,11 +3,11 @@ import BtnConfig from './utils/BtnConfig'
 import Loading from './utils/Loading'
 
 export default function TextArea({ loading }) {
-  const [countCaracter, setCoountCarater] = useState(0)
+  const [countCaracter, setCountCarater] = useState(0)
 
   function count(event) {
     event.preventDefault()
-    setCoountCarater(event.target.value.length)
+    setCountCarater(event.target.value.length)
   }
   return (
     <div className='w-full'>
@@ -21,17 +21,17 @@ export default function TextArea({ loading }) {
           disabled={loading}
         ></textarea>
 
-        <div className='bg-slate-200 border border-slate-200 00 flex flex-col xs:flex-row items-center justify-between p-4'>
+        <div className='bg-slate-200 border border-slate-200 flex flex-col xs:flex-row items-center justify-between p-4'>
           <label className='text-xs sm:text-sm text-gray-800 pb-3 xs:pb-0'>
             {countCaracter < 200
-              ? `Minimo de caracteres ${countCaracter} / 200`
+              ? `Mínimo de caracteres ${countCaracter} / 200`
               : ''}
           </label>
 
           <div className='flex items-center justify-end gap-2'>
             {loading ? (
               <Loading
-                estilos='w-full max-w-[130px] flex items-center justify-center h-full text-black'
+                estilos='w-full max-w-[130px] flex items-center justify-center h-full text-black py-2'
                 estilosSpan='flex items-center gap-x-2 text-sm'
               />
             ) : (

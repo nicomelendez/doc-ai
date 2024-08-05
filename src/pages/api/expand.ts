@@ -30,7 +30,6 @@ export const POST: APIRoute = async ({ request }) => {
   }
 }
 
-// Función para generar un documento Word
 async function jsonToWord(jsonData: any) {
   const doc = new Document({
     sections: [

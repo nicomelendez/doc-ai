@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import useStore from '@/lib/useStore.ts'
 import Questions from './Questions'
 import { expand } from '@/services/expand.js'
-import { getToastify } from '@/lib/scripts'
+import { getToastifyError } from '@/lib/scripts'
 
 export default function Generar() {
   const { contextResponse, setContextResponse, setAnalysisResponse } = useStore(
@@ -28,14 +28,14 @@ export default function Generar() {
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
     } catch (error) {
-      getToastify('Hubo un error al crear el documento.')
+      getToastifyError('Hubo un error al crear el documento.')
     }
   }
 
   if (finish) {
     return (
       <div className='text-center pt-10'>
-        <h2 className='text-3xl text-white font-bold sm:text-4xl leading-relaxed pb-3 text-center'>
+        <h2 className='text-3xl text-white font-bold sm:text-4xl leading-relaxed pb-3 mx-auto text-center max-w-[630px] lg:max-w-[800px]'>
          Listo ya puedes descargar tu documento
         </h2>
         <p className='text-gray-300 pb-10 text-pretty'>
@@ -56,7 +56,7 @@ export default function Generar() {
     <>
       {contextResponse != null ? (
         <>
-          <h2 className='text-3xl text-white font-bold sm:text-4xl leading-relaxed pb-3 text-center'>
+          <h2 className='text-3xl text-white font-bold sm:text-4xl leading-relaxed pb-3 mx-auto text-center max-w-[630px] lg:max-w-[800px]'>
             {loading
               ? 'En un momento tendras tu documento'
               : 'Completa las siguientes preguntas'}

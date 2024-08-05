@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import useStore from '@/lib/useStore.ts'
 import Loading from '@/components/utils/Loading'
 import { context } from '@/services/context'
-import { getToastify } from '@/lib/scripts'
+import { getToastifyError } from '@/lib/scripts'
 import TextArea from '@/components/TextArea'
 export default function Formulario() {
   const { setContextResponse, getConfig } = useStore((state) => state)
@@ -14,7 +14,7 @@ export default function Formulario() {
     const fields = Object.fromEntries(new window.FormData(e.target))
     
     if (fields.info.trim().length < 200) {
-      getToastify('Debes ingresar un texto de almenos 200 caracteres')
+      getToastifyError('Debes ingresar un texto de almenos 200 caracteres')
       return
     }
     try {
@@ -25,7 +25,7 @@ export default function Formulario() {
 
       if (!data) {
         setLoading(false)
-        getToastify('No pudimos procesar tu texto, vuelve a intentar')
+        getToastifyError('No pudimos procesar tu texto, vuelve a intentar')
         return
       }
 
@@ -34,7 +34,7 @@ export default function Formulario() {
       setContextResponse({ contextResponse: data })
       window.location.href = '/analisis'
     } catch (error) {
-      getToastify('Algo ha salido mal')
+      getToastifyError('Algo ha salido mal')
     }
   }
 

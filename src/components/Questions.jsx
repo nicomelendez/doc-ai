@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Loading from './utils/Loading'
-import { getRequestBody, getToastify } from '@/lib/scripts.js'
+import { getRequestBody, getToastifyError } from '@/lib/scripts.js'
 import { refine } from '@/services/refine.js'
 import { analyze } from '@/services/analyze.js'
 import { bibliography } from '@/services/bibliography.js'
@@ -55,7 +55,7 @@ export default function Questions({
       setLoading(false)
       setFinish(true)
     } catch (error) {
-      getToastify('Algo ha salido mal')
+      getToastifyError('Algo ha salido mal')
     }
   }
 

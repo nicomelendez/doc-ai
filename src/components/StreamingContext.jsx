@@ -3,11 +3,7 @@ import React, { useState } from 'react'
 export default function StreamingContext() {
   const [responseText, setResponseText] = useState('')
   const [loading, setLoading] = useState(false)
-  function showModal() {
-    const modal = $('#modal') 
-    if (modal?.style == null) return
-    modal.style.display = 'block'
-  }
+
   async function get() {
     setLoading(true)
     setResponseText('')
@@ -33,7 +29,6 @@ export default function StreamingContext() {
         done = doneReading
         const chunk = decoder.decode(value, { stream: true })
 
-        // Remover formato no deseado y concatenar texto
         setResponseText((prev) => prev + chunk.replace(/(\d+:"|")/g, ''))
       }
     } catch (error) {
