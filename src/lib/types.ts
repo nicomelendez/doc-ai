@@ -46,10 +46,13 @@ export interface StoreState {
   analysisResponse: AnalysisResponse | null
   contextResponse: ContextResponse | null
   config: Config | null
+  finish: Boolean | null
   setAnalysisResponse: (response: AnalysisResponse) => void
   setContextResponse: (response: ContextResponse) => void
   setConfig: (config: Partial<Config>) => void
+  setFinish: (finish: Partial<Boolean>) => void
   getAnalysis: () => AnalysisResponse | null
   getContext: () => ContextResponse | null
   getConfig: () => Config | null
+  getFinish: () => Boolean | null
 }

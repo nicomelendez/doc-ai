@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ResponseChat from './ResponseChat'
+import ResponseChat from './chat/ResponseChat'
 import { consult } from '@/services/consult'
 import { getToastifyError } from '@/lib/scripts'
 

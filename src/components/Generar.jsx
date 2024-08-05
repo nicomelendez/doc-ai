@@ -1,22 +1,27 @@
 import React, { useState } from 'react'
 import useStore from '@/lib/useStore.ts'
 import Questions from './Questions'
-import { expand } from '@/services/expand.js'
 import { getToastifyError } from '@/lib/scripts'
+import { doc } from '@/services/doc.js'
 
 export default function Generar() {
-  const { contextResponse, setContextResponse, setAnalysisResponse } = useStore(
-    (state) => state
-  )
-  const getAnalysis = useStore((state) => state.getAnalysis)
+  const {
+    contextResponse,
+    setContextResponse,
+    setAnalysisResponse,
+    getConfig,
+    getFinish,
+    setFinish,
+    getAnalysis,
+  } = useStore((state) => state)
+
   const [loading, setLoading] = useState(false)
-  const [finish, setFinish] = useState(false)
   const [loadingDownload, setLoadingDownload] = useState(false)
 
   async function downloadWord() {
     setLoadingDownload(true)
     try {
-      const blob = await expand(getAnalysis())
+      const blob = await doc(getAnalysis())
       const url = URL.createObjectURL(blob)
 
       setLoadingDownload(false)
@@ -28,18 +33,21 @@ export default function Generar() {
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
     } catch (error) {
-      getToastifyError('Hubo un error al crear el documento.')
+      getToastifyError(
+        'Hubo un error al crear el documento. Recarge la página y intente de nuevo.'
+      )
     }
   }
 
-  if (finish) {
+  if (getFinish()) {
     return (
       <div className='text-center pt-10'>
         <h2 className='text-3xl text-white font-bold sm:text-4xl leading-relaxed pb-3 mx-auto text-center max-w-[630px] lg:max-w-[800px]'>
-         Listo ya puedes descargar tu documento
+          Listo ya puedes descargar tu documento
         </h2>
         <p className='text-gray-300 pb-10 text-pretty'>
-          Recuerda que es una plantilla inicial, revisa la información y las fuentes.
+          Recuerda que es una plantilla inicial, revisa la información y las
+          fuentes.
         </p>
         <button
           onClick={downloadWord}
@@ -78,6 +86,7 @@ export default function Generar() {
           setAnalysisResponse={setAnalysisResponse}
           setLoading={setLoading}
           setFinish={setFinish}
+          getConfig={getConfig}
         />
       </section>
     </>

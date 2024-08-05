@@ -1,26 +1,27 @@
 import React, { useState } from 'react'
 import useStore from '@/lib/useStore.ts'
-import Loading from '@/components/utils/Loading'
 import { context } from '@/services/context'
 import { getToastifyError } from '@/lib/scripts'
 import TextArea from '@/components/TextArea'
 export default function Formulario() {
-  const { setContextResponse, getConfig } = useStore((state) => state)
+  const { setContextResponse, getConfig, setFinish } = useStore(
+    (state) => state
+  )
   const [loading, setLoading] = useState(false)
 
   async function handlerSubmit(e) {
     e.preventDefault()
     setLoading(false)
     const fields = Object.fromEntries(new window.FormData(e.target))
-    
+
     if (fields.info.trim().length < 200) {
       getToastifyError('Debes ingresar un texto de almenos 200 caracteres')
       return
     }
     try {
       setLoading(true)
+      setFinish(false)
       const config = getConfig()
-
       const data = await context(fields.info, config)
 
       if (!data) {

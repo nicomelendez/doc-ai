@@ -65,17 +65,16 @@ export const getPromptBibliografia = (info: String) =>
 Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Este JSON debe tener bibliografías reales y accesibles sobre las fuentes. Será utilizado por el usuario para entregar un informe académico a su universidad o escuela.
 
 **Instrucciones para el JSON:**
-  - **id:** Un identificador único para cada punto.
   - **title:** "Bibliografía".
-  - **descripcion:** Una lista de nombres de recursos y sus URL, con al menos 3 entradas separadas por "-".
+  - **descripcion:** Una descripción con fuentes reales y accesibles.
 
 Recuerda, el JSON debe incluir bibliografía con enlaces reales a fuentes que validen algunos o todos los puntos mencionados. La bibliografía debe tener al menos tres referencias y estar en el siguiente formato:
 
 **Formato JSON requerido:**
 {
-  "id": 4,
+  "id": 9,
   "title": "Bibliografía",
-  "descripcion": "- [Nombre del recurso](URL) - [Nombre del recurso](URL) - [Nombre del recurso](URL)"
+  "descripcion": "Esta sección ofrece una visión general de los recursos bibliográficos utilizados para comprender el impacto de la tecnología en la sociedad y la economía. El artículo de revista especializada 'The Future of Work' de Wired proporciona una visión profunda de cómo la tecnología está cambiando el panorama laboral y educativo. Por otro lado, el libro de texto 'Inteligencia Artificial: una Introducción' de J.P. Ortiz ofrece una introducción exhaustiva a los conceptos y aplicaciones de la inteligencia artificial. Además, el sitio web confiable 'The Future of Work' de Pew Research ofrece análisis y recomendaciones valiosas para entender el impacto de la tecnología en la sociedad y la economía. Estos recursos ofrecen una visión completa y actualizada de los cambios que se están produciendo en el mundo laboral, educativo y social, y cómo podemos prepararnos para estos cambios."
 }
 
 **Requisitos adicionales:**
@@ -94,21 +93,17 @@ SOLO QUIERO QUE ME DEVUELVAS UN OBJETO COMO EL EJEMPLO DADO EN FORMATO JSON. EST
 {
   "id": 4,
   "title": "Bibliografía",
-  "descripcion": "- [Artículo de MDN Web Docs sobre HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) - [Libro de texto: "Eloquent JavaScript"](https://eloquentjavascript.net/)"
+  "descripcion": "Esta sección ofrece una visión general de los recursos bibliográficos utilizados para comprender el impacto de la tecnología en la sociedad y la economía. El artículo de revista especializada 'The Future of Work' de Wired proporciona una visión profunda de cómo la tecnología está cambiando el panorama laboral y educativo. Por otro lado, el libro de texto 'Inteligencia Artificial: una Introducción' de J.P. Ortiz ofrece una introducción exhaustiva a los conceptos y aplicaciones de la inteligencia artificial. Además, el sitio web confiable 'The Future of Work' de Pew Research ofrece análisis y recomendaciones valiosas para entender el impacto de la tecnología en la sociedad y la economía. Estos recursos ofrecen una visión completa y actualizada de los cambios que se están produciendo en el mundo laboral, educativo y social, y cómo podemos prepararnos para estos cambios."
 }
 
 **IMPORTANTE:** La salida debe ser únicamente el objeto JSON en el formato especificado, sin ningún texto adicional. Asegúrate de que la bibliografía contenga enlaces válidos.
 ` as const
 
-export const getPromptContext = (
-  info: String,
-  purpose: String,
-  lenguaje: String
-) =>
+export const getPromptContext = (info: String, lenguaje: String) =>
   `
-    Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Analiza el texto proporcionado para entender y definir el contexto en el cual el usuario desea aplicar el documento. El propósito del usuario es '${purpose}', y el documento debe ser escrito en lenguaje '${lenguaje}'. Basado en este análisis, genera un objeto JSON que incluya un atributo 'context'. Este 'context' debe ser un texto detallado con un mínimo de 800 caracteres, formulado en una sola línea que puede contener puntos y seguidos, que refleje el enfoque y las principales consideraciones que el usuario tiene en mente para su documento. Asegúrate explícitamente de cumplir con el mínimo de caracteres requerido.
+    Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Analiza el texto proporcionado para entender y definir el contexto en el cual el usuario desea crear un documento de informe para entregar a su universidad o secundaria. El propósito del usuario es generar un documento que debe ser escrito en lenguaje ${lenguaje}. Basado en este análisis, genera un objeto JSON que incluya un atributo 'context'. Este 'context' debe ser un texto detallado con un mínimo de 800 caracteres, formulado en una sola línea que puede contener puntos y seguidos, que refleje el enfoque y las principales consideraciones que el usuario tiene en mente para su documento. Asegúrate explícitamente de cumplir con el mínimo de caracteres requerido.
 
-    Además, genera al menos tres preguntas críticas relacionadas con el contenido para asegurar que el contexto sea lo más preciso posible. Estas preguntas deben ayudar a clarificar cualquier aspecto que podría necesitar más detalles o una perspectiva específica del usuario.
+    Además, genera al menos tres preguntas o más, críticas relacionadas con el contenido para asegurar que el contexto sea lo más preciso posible. Estas preguntas deben ayudar a clarificar cualquier aspecto que podría necesitar más detalles o una perspectiva específica del usuario. Deben de tener enfoques diferentes cada pregunta, así las respuestas nos dan el enfoque especifico.
 
     Texto a analizar:
     ${info}
@@ -189,8 +184,8 @@ export const expandPoint = (
       **Recuerda:** Cualquier texto adicional fuera del objeto JSON debe ser evitado. Asegúrate de que el JSON generado cumpla con los requisitos mencionados.
   ` as const
 
-  export const expandPointAll = (objeto: String) =>
-    `
+export const expandPointAll = (objeto: String) =>
+  `
   Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Este JSON se usará para estructurar un documento Word, ten en cuenta que debes hacerlo como si estuvieras redactando un informe de tarea.
   
   **Idioma:** Genera el contenido en Español, respetando las normas ortográficas y gramaticales del idioma. Usa un lenguaje natural y fluido. Evita repetir información del título o de la descripción inicial y no repitas contenido ya mencionado.
@@ -233,4 +228,3 @@ export const expandPoint = (
   - Asegúrate de que el JSON generado cumpla con los requisitos mencionados.
   
   ` as const
-  

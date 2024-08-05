@@ -5,6 +5,7 @@ import { refine } from '@/services/refine.js'
 import { analyze } from '@/services/analyze.js'
 import { bibliography } from '@/services/bibliography.js'
 import Process from '@/components/utils/Process'
+import { expand } from '@/services/expand.js'
 
 export default function Questions({
   contextResponse,
@@ -12,34 +13,41 @@ export default function Questions({
   setAnalysisResponse,
   setLoading,
   setFinish,
+  getConfig,
 }) {
   const [process, setProcess] = useState(-1)
 
   async function handleSubmit(e) {
     e.preventDefault()
     setLoading(false)
+    setFinish(false)
     const fields = Object.fromEntries(new FormData(e.target))
 
     const requestBody = getRequestBody(fields, contextResponse)
-    console.log(requestBody)
+
     try {
       setLoading(true)
       setProcess(0)
-      const refinedContext = await refine(requestBody)
+      const config = getConfig()
 
+      let refinedContext = await refine(requestBody)
       setProcess(1)
-      const responseAnalized = await analyze(refinedContext)
+
+      let responseAnalized = await analyze(refinedContext)
 
       setProcess(2)
-      const bibliographyNew = await bibliography(responseAnalized)
+      let responseExpand = await expand(responseAnalized)
+
+      setProcess(3)
+      let bibliographyNew = await bibliography(responseExpand)
 
       // Encuentra el índice del objeto con el título 'Bibliografía'
-      const index = responseAnalized.pointers.findIndex(
+      const index = responseExpand.pointers.findIndex(
         (item) => item.title === 'Bibliografía'
       )
 
       // Actualiza directamente el objeto en esa posición
-      responseAnalized.pointers[index] = bibliographyNew
+      responseExpand.pointers[index] = bibliographyNew
 
       localStorage.setItem(
         'context',
@@ -49,10 +57,11 @@ export default function Questions({
         contextResponse: refinedContext,
         asks: contextResponse.asks,
       })
-      localStorage.setItem('analyze', JSON.stringify(responseAnalized))
-      setAnalysisResponse({ analysisResponse: responseAnalized })
+      localStorage.setItem('analyze', JSON.stringify(responseExpand))
+      setAnalysisResponse({ analysisResponse: responseExpand })
 
       setLoading(false)
+      localStorage.setItem('finish', JSON.stringify(true))
       setFinish(true)
     } catch (error) {
       getToastifyError('Algo ha salido mal')

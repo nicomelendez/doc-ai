@@ -1,6 +1,6 @@
-export async function expand(analyze) {
+export async function doc(analyze) {
   try {
-    const response = await fetch('/api/expand', {
+    const response = await fetch('/api/doc', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ info: analyze }),
@@ -9,8 +9,8 @@ export async function expand(analyze) {
       return null
     }
 
-    const data = await response.json()
-    return data
+    const blob = await response.blob()
+    return blob
   } catch (error) {
     return null
   }

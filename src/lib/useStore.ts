@@ -12,8 +12,9 @@ const useStore = create<StoreState>((set: any) => ({
   config: {
     lenguaje: Lenguaje.SemiFormal,
     idioma: Idioma.Espanol,
-    bibliografia: true,
+    bibliografia: false,
   },
+  finish: null,
   getContext: () => {
     const state: StoreState = useStore.getState()
     if (state.contextResponse) {
@@ -28,14 +29,16 @@ const useStore = create<StoreState>((set: any) => ({
     }
     return null
   },
-  setConfig: (newConfig: any) =>
-    set((state: any) => ({
-      config: { ...state.config, ...newConfig },
-    })),
+  setConfig: (newConfig: any) => set({ config: newConfig }),
   getConfig: () => {
     const state: StoreState = useStore.getState()
     return state.config
   },
+  getFinish: () => {
+    const state: StoreState = useStore.getState()
+    return state.finish
+  },
+  setFinish: (newConfig: any) => set({ finish: newConfig }),
 }))
 
 export default useStore

@@ -93,22 +93,16 @@ export async function getBibliografia(info: String) {
     const jsonResponse = JSON.parse(textResponse)
     return jsonResponse
   } catch (error) {
-    console.log(error)
     return null
   }
 }
 
 export async function contextInfo(info: String, config: Config) {
-  console.log(config)
   try {
-    const prompt = getPromptContext(
-      info,
-      'Un reporte para la universidad',
-      config.lenguaje.toString()
-    )
+    const prompt = getPromptContext(info, config.lenguaje.toString())
 
     const query = {
-      model: 'llama-3-sonar-large-32k-chat',
+      model: 'llama-3.1-70b-instruct',
       messages: buildPrompt(prompt),
       max_tokens: 5000,
       temperature: 0.75,
@@ -212,7 +206,6 @@ export async function analyzeAndExpandInfo(pointers: Pointer[]) {
       )
     })
   )
-  console.log(expandedPoints)
   return expandedPoints
 }
 
