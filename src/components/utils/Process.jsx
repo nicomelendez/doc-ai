@@ -4,11 +4,13 @@ export default function Process({ process }) {
   const getProcessText = (process) => {
     switch (process) {
       case 0:
-        return '1/3 - Ajustando el contexto'
+        return '1/4 - Ajustando el contexto'
       case 1:
-        return '2/3 - Buscando información'
+        return '2/4 - Buscando información'
       case 2:
-        return '3/3 - Analizando bibliografías'
+        return '3/4 - Procesando información'
+      case 3:
+        return '4/4 - Analizando bibliografías'
       default:
         return ''
     }
@@ -17,11 +19,13 @@ export default function Process({ process }) {
   const getProcessWidth = (process) => {
     switch (process) {
       case 0:
-        return 'w-1/3'
+        return 'w-1/4'
       case 1:
-        return 'w-2/3'
+        return 'w-2/4'
       case 2:
-        return 'w-3/3'
+        return 'w-3/4'
+      case 3:
+        return 'w-4/4'
       default:
         return 'w-0'
     }

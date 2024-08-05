@@ -15,7 +15,7 @@ export default function Title() {
       </h1>
       <p
         className={`text-slate-300 text-sm lg:text-base text-pretty ${
-          prefersReducedMotion ? '' : 'animate-fade-in animate-delay-[2s]'
+          prefersReducedMotion ? '' : 'animate-fade-in animate-delay-[1.8s] md:animate-delay-[2s]'
         }`}
       >
         Proporciona la información sobre un tema y obtén un documento Word para
