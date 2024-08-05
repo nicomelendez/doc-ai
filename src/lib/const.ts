@@ -60,6 +60,46 @@ ${info}
 Recuerda, los links de la fuente de donde lo sacaste y ponerlo en bibliografia y cualquier texto adicional fuera del objeto JSON debe ser evitado.
 ` as const
 
+export const getPromptBibliografia = (info: String) =>
+  `
+Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Este JSON debe tener bibliografías reales y accesibles sobre las fuentes. Será utilizado por el usuario para entregar un informe académico a su universidad o escuela.
+
+**Instrucciones para el JSON:**
+  - **id:** Un identificador único para cada punto.
+  - **title:** "Bibliografía".
+  - **descripcion:** Una lista de nombres de recursos y sus URL, con al menos 3 entradas separadas por "-".
+
+Recuerda, el JSON debe incluir bibliografía con enlaces reales a fuentes que validen algunos o todos los puntos mencionados. La bibliografía debe tener al menos tres referencias y estar en el siguiente formato:
+
+**Formato JSON requerido:**
+{
+  "id": 4,
+  "title": "Bibliografía",
+  "descripcion": "- [Nombre del recurso](URL) - [Nombre del recurso](URL) - [Nombre del recurso](URL)"
+}
+
+**Requisitos adicionales:**
+- Asegúrate de que la bibliografía contenga enlaces que validen la información.
+- Utiliza fuentes académicas y confiables como Google Scholar, JSTOR, PubMed, y otros repositorios académicos.
+- La salida debe ser únicamente el objeto JSON en el formato especificado, sin ningún texto adicional.
+
+----------------------------------------
+Aquí está la información para analizar:
+
+${info}
+
+---------------------------------------
+
+SOLO QUIERO QUE ME DEVUELVAS UN OBJETO COMO EL EJEMPLO DADO EN FORMATO JSON. ESTO ES UN EJEMPLO, NO DEBE USARSE:
+{
+  "id": 4,
+  "title": "Bibliografía",
+  "descripcion": "- [Artículo de MDN Web Docs sobre HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) - [Libro de texto: "Eloquent JavaScript"](https://eloquentjavascript.net/)"
+}
+
+**IMPORTANTE:** La salida debe ser únicamente el objeto JSON en el formato especificado, sin ningún texto adicional. Asegúrate de que la bibliografía contenga enlaces válidos.
+` as const
+
 export const getPromptContext = (
   info: String,
   purpose: String,
@@ -98,6 +138,7 @@ export const refineContextPrompt = (
   `
       Utiliza esta información para analizar y generar exclusivamente un objeto JSON. La tarea implica comprender y ajustar el contexto para alinearlo mejor con las necesidades y respuestas del usuario, lo que resulta en una presentación más precisa del enfoque deseado del usuario.
       
+      SI TE TOCA EL PUNTO DE BIBLIOGRAFIA PONE LOS LINK QUE TIENE
       Contexto original: ${originalContext}
 
       ----
@@ -147,3 +188,49 @@ export const expandPoint = (
 
       **Recuerda:** Cualquier texto adicional fuera del objeto JSON debe ser evitado. Asegúrate de que el JSON generado cumpla con los requisitos mencionados.
   ` as const
+
+  export const expandPointAll = (objeto: String) =>
+    `
+  Estás siendo utilizado para analizar el siguiente texto y generar exclusivamente un objeto JSON detallado. Este JSON se usará para estructurar un documento Word, ten en cuenta que debes hacerlo como si estuvieras redactando un informe de tarea.
+  
+  **Idioma:** Genera el contenido en Español, respetando las normas ortográficas y gramaticales del idioma. Usa un lenguaje natural y fluido. Evita repetir información del título o de la descripción inicial y no repitas contenido ya mencionado.
+  
+  --------------------
+  En base al siguiente objeto con la información:
+  ${objeto}
+  
+  ------------------------------
+  
+  **Instrucciones para el JSON:**
+    - **id:** Un identificador único para cada punto.
+    - **title:** El título del punto.
+    - **descripcion:** Una descripción detallada que incluya aspectos diversos del tema, incluyendo beneficios, desventajas, ejemplos concretos y cualquier otro punto relevante que enriquezca el contenido.
+  
+  **Formato JSON requerido:**
+
+  [
+    {
+      "id": 1,
+      "title": "Título del Punto 1",
+      "descripcion": "Descripción detallada del Punto 1, abordando diferentes aspectos del tema."
+    },
+    {
+      "id": 2,
+      "title": "Título del Punto 2",
+      "descripcion": "Descripción detallada del Punto 2, abordando diferentes aspectos del tema."
+    }
+    // Otros puntos adicionales...
+  ]
+
+  
+  **Nota:** La salida debe ser exclusivamente el objeto JSON con el mismo formato del objeto anterior, sin ningún texto adicional.
+  
+  **Recuerda:**
+  - Cada punto debe abordar aspectos diferentes y variados del tema, evitando comenzar con las mismas palabras en cada punto.
+  - Incluye tanto beneficios como desventajas y otros puntos relevantes.
+  - Evita cualquier repetición de contenido ya mencionado.
+  - Cualquier texto adicional fuera del objeto JSON debe ser evitado.
+  - Asegúrate de que el JSON generado cumpla con los requisitos mencionados.
+  
+  ` as const
+  

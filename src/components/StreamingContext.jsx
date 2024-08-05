@@ -4,7 +4,7 @@ export default function StreamingContext() {
   const [responseText, setResponseText] = useState('')
   const [loading, setLoading] = useState(false)
   function showModal() {
-    const modal = document.getElementById('modal')
+    const modal = $('#modal') 
     if (modal?.style == null) return
     modal.style.display = 'block'
   }

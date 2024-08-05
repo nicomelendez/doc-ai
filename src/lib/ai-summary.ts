@@ -4,6 +4,8 @@ import {
   getPromptContext,
   refineContextPrompt,
   expandPoint,
+  getPromptBibliografia,
+  expandPointAll,
 } from './const'
 import type { AnalysisResponse, Ask, Pointer, Config } from './types'
 import { OpenAIStream, StreamingTextResponse } from 'ai'
@@ -50,7 +52,6 @@ export function buildPrompt(
 export async function analyzeInfo(info: String) {
   try {
     const prompt = getPromptAnalyze(info)
-
     const query = {
       model: 'llama-3.1-70b-instruct',
       messages: buildPrompt(prompt),
@@ -68,6 +69,32 @@ export async function analyzeInfo(info: String) {
     const jsonResponse = JSON.parse(textResponse)
     return jsonResponse
   } catch (error) {
+    return null
+  }
+}
+
+export async function getBibliografia(info: String) {
+  try {
+    const prompt = getPromptBibliografia(info)
+
+    const query = {
+      model: 'llama-3.1-70b-instruct',
+      messages: buildPrompt(prompt),
+      max_tokens: 7000,
+      temperature: 0.75,
+      frequency_penalty: 1,
+    } as const
+
+    const response = await perplexity.chat.completions.create(query)
+
+    const textResponse = response.choices[0].message.content
+
+    if (textResponse == null) return null
+
+    const jsonResponse = JSON.parse(textResponse)
+    return jsonResponse
+  } catch (error) {
+    console.log(error)
     return null
   }
 }
@@ -175,9 +202,9 @@ export async function expandPointDetails(
   }
 }
 
-export async function analyzeAndExpandInfo(initialPoints: AnalysisResponse) {
+export async function analyzeAndExpandInfo(pointers: Pointer[]) {
   const expandedPoints = await Promise.all(
-    initialPoints.pointers.map(async (point) => {
+    pointers.map(async (point) => {
       if (point == null) return
       return await expandPointDetails(
         point.title,
@@ -190,3 +217,30 @@ export async function analyzeAndExpandInfo(initialPoints: AnalysisResponse) {
   return expandedPoints
 }
 
+export async function expandPointDetailsAll(initialPoints: AnalysisResponse) {
+  const prompt = expandPointAll(JSON.stringify(initialPoints.pointers))
+
+  const query = {
+    model: 'llama-3.1-70b-instruct',
+    messages: buildPrompt(prompt),
+    max_tokens: 10000,
+    temperature: 1,
+    frequency_penalty: 1,
+  }
+
+  try {
+    const response = await perplexity.chat.completions.create(query)
+    const textResponse = response.choices[0].message.content
+
+    if (textResponse == null || textResponse.trim() === '') {
+      return null
+    }
+
+    const objeto = JSON.parse(textResponse)
+
+    return objeto
+  } catch (error) {
+    console.error('Failed to expand point details:', error)
+    return null
+  }
+}

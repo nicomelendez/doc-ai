@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Lenguaje, Idioma } from '@/lib/types.ts'
 import { SelectComponent } from './SelectComponent'
 import useStore from '@/lib/useStore'
+import { $ } from '@/lib/dom-selector'
 
 export default function SelectConfig() {
   const { getConfig, setConfig } = useStore((state) => state)
 
   function hideModal() {
-    const modal = document.getElementById('modal')
+    const modal = $('#modal')
     if (modal?.style == null) return
     modal.style.display = 'none'
   }

@@ -3,6 +3,7 @@ import Loading from './utils/Loading'
 import { getRequestBody, getToastify } from '@/lib/scripts.js'
 import { refine } from '@/services/refine.js'
 import { analyze } from '@/services/analyze.js'
+import { bibliography } from '@/services/bibliography.js'
 import Process from '@/components/utils/Process'
 
 export default function Questions({
@@ -20,20 +21,25 @@ export default function Questions({
     const fields = Object.fromEntries(new FormData(e.target))
 
     const requestBody = getRequestBody(fields, contextResponse)
-
+    console.log(requestBody)
     try {
       setLoading(true)
       setProcess(0)
       const refinedContext = await refine(requestBody)
 
-      if (refinedContext == null) {
-        setLoading(false)
-        getToastify('Algo ha salido mal')
-        return
-      }
-
       setProcess(1)
       const responseAnalized = await analyze(refinedContext)
+
+      setProcess(2)
+      const bibliographyNew = await bibliography(responseAnalized)
+
+      // Encuentra el índice del objeto con el título 'Bibliografía'
+      const index = responseAnalized.pointers.findIndex(
+        (item) => item.title === 'Bibliografía'
+      )
+
+      // Actualiza directamente el objeto en esa posición
+      responseAnalized.pointers[index] = bibliographyNew
 
       localStorage.setItem(
         'context',
@@ -45,9 +51,6 @@ export default function Questions({
       })
       localStorage.setItem('analyze', JSON.stringify(responseAnalized))
       setAnalysisResponse({ analysisResponse: responseAnalized })
-
-      setProcess(2)
-      // Buscar bibliografía
 
       setLoading(false)
       setFinish(true)

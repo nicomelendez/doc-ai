@@ -8,7 +8,7 @@ export default function Chat() {
   }
 
   return (
-    <section className='w-full'>
+    <section className='w-full max-w-[720px]'>
       {/* Poner el streaming  de respuesta de la api para usar el SDK de vercel */}
       <div className='w-full overflow-hidden rounded-lg border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600'>
         <textarea
