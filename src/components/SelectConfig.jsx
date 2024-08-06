@@ -50,7 +50,7 @@ export default function SelectConfig() {
           selected={getConfig().idioma}
         />
         <label className='flex w-full items-center'>
-          <span className='w-[120px] text-white font-medium'>Bibliografia</span>
+          <span className='w-[120px] text-white font-medium'>Bibliografía</span>
           <select
             name='bibliografia'
             className='flex-1 p-2 cursor-pointer rounded-lg'

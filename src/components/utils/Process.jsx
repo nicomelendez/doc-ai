@@ -8,7 +8,7 @@ export default function Process({ process }) {
       case 1:
         return '2/4 - Buscando información'
       case 2:
-        return '3/4 - Procesando información'
+        return '3/4 - Procesando la información'
       case 3:
         return '4/4 - Analizando bibliografías'
       default:
