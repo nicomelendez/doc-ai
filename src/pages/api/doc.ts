@@ -11,7 +11,9 @@ export const POST: APIRoute = async ({ request }) => {
       ? jsonBody.info.pointers
       : jsonBody.info.analysisResponse.pointers
 
-    const docBuffer = await jsonToWord(pointers)
+    const filteredPointers = pointers.filter((point: any) => point.title && point.descripcion)
+
+    const docBuffer = await jsonToWord(filteredPointers)
 
     return new Response(docBuffer, {
       status: 200,
