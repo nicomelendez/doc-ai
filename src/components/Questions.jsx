@@ -21,6 +21,7 @@ export default function Questions({
     e.preventDefault()
     setLoading(false)
     setFinish(false)
+    localStorage.setItem('finish', JSON.stringify(false))
     const fields = Object.fromEntries(new FormData(e.target))
 
     const requestBody = getRequestBody(fields, contextResponse)
@@ -70,6 +71,7 @@ export default function Questions({
       setLoading(false)
       setFinish(true)
     } catch (error) {
+      setLoading(false)
       getToastifyError('Algo ha salido mal')
     }
   }

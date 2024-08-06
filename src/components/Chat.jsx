@@ -37,7 +37,7 @@ export default function Chat() {
   return (
     <>
       {responseText.trim() === '' ? (
-        <div className='text-center'>
+        <div className='text-center mx-auto max-w-[630px] lg:max-w-[800px]'>
           <h2 className='text-3xl text-white font-bold sm:text-4xl leading-relaxed pb-3'>
             Genera un contexto para poder crear tu plantilla
           </h2>

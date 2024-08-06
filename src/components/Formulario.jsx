@@ -21,6 +21,7 @@ export default function Formulario() {
     try {
       setLoading(true)
       setFinish(false)
+      localStorage.setItem('finish', JSON.stringify(false))
       const config = getConfig()
       const data = await context(fields.info, config)
 
@@ -35,6 +36,7 @@ export default function Formulario() {
       setContextResponse({ contextResponse: data })
       window.location.href = '/analisis'
     } catch (error) {
+      setLoading(false)
       getToastifyError('Algo ha salido mal')
     }
   }

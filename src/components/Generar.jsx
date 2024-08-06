@@ -33,6 +33,7 @@ export default function Generar() {
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
     } catch (error) {
+      setLoadingDownload(false)
       getToastifyError(
         'Hubo un error al crear el documento. Recarge la página y intente de nuevo.'
       )
@@ -43,11 +44,11 @@ export default function Generar() {
     return (
       <div className='text-center pt-10'>
         <h2 className='text-3xl text-white font-bold sm:text-4xl leading-relaxed pb-3 mx-auto text-center max-w-[630px] lg:max-w-[800px]'>
-          Listo ya puedes descargar tu documento
+          Tu documento está listo para descargar
         </h2>
         <p className='text-gray-300 pb-10 text-pretty'>
-          Recuerda que es una plantilla inicial, revisa la información y las
-          fuentes.
+          Recuerda que es un punto de partida. Revisa y ajusta los
+          contenidos y las referencias.
         </p>
         <button
           onClick={downloadWord}
@@ -66,13 +67,13 @@ export default function Generar() {
         <>
           <h2 className='text-3xl text-white font-bold sm:text-4xl leading-relaxed pb-3 mx-auto text-center max-w-[630px] lg:max-w-[800px]'>
             {loading
-              ? 'En un momento tendras tu documento'
-              : 'Completa las siguientes preguntas'}
+              ? 'Tu documento estará listo en breve'
+              : 'Completa las siguientes preguntas.'}
           </h2>
           <p className='text-gray-300 pb-10'>
             {loading
-              ? 'Estamos analizando tus respuestas y buscando información'
-              : 'Para poder obtener un informe de mejor calidad y más ajustado a tus necesidades'}
+              ? 'Analizando tus respuestas y buscando datos relevantes'
+              : 'Para crear un informe que se ajuste mejor a tus necesidades.'}
           </p>
         </>
       ) : (

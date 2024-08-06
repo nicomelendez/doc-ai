@@ -28,9 +28,13 @@ export function buildPrompt(
 
 export async function analyzeUserInfo(info: string) {
   const prompt = `
-  Generame un texto de ni menos 200 caracteres ni mayor a 250 caracteres sobre esto:
+  Genera un texto coherente de entre 200 y 250 caracteres que brinde un contexto inicial basado en la siguiente información:
+    
   ${info}
-`
+
+
+  Recuerda que no tiene que ser menor a 200 ni mayor a 250 caracteres. Asegúrate de que el texto sea claro, conciso y relevante para el tema proporcionado.
+  `;
 
   const query = {
     model: 'llama-3.1-70b-instruct',
