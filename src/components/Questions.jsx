@@ -6,6 +6,8 @@ import { analyze } from '@/services/analyze.js'
 import { bibliography } from '@/services/bibliography.js'
 import Process from '@/components/utils/Process'
 import { expand } from '@/services/expand.js'
+import { Idioma } from '@/lib/types'
+import { translate } from '@/services/translate'
 
 export default function Questions({
   contextResponse,
@@ -19,6 +21,10 @@ export default function Questions({
 
   async function handleSubmit(e) {
     e.preventDefault()
+    const config = getConfig()
+    const { idioma, bibliografia } = config
+    const isBibliografia = bibliografia === 'true'
+    const isEspanol = idioma === 'Español'
     setLoading(false)
     setFinish(false)
     localStorage.setItem('finish', JSON.stringify(false))
@@ -28,48 +34,196 @@ export default function Questions({
 
     try {
       setLoading(true)
-      setProcess(0)
-      const config = getConfig()
+      if (isBibliografia && isEspanol) {
+        setProcess(0)
 
-      let refinedContext = await refine(requestBody)
-      setProcess(1)
-      console.log(refinedContext)
-      console.log('------------')
+        let refinedContext = await refine(requestBody)
+        setProcess(1)
+        console.log(refinedContext)
+        console.log('------------')
 
-      let responseAnalized = await analyze(refinedContext)
-      console.log(responseAnalized)
-      console.log('------------')
+        let responseAnalized = await analyze(refinedContext)
+        console.log(responseAnalized)
+        console.log('------------')
 
-      setProcess(2)
-      let responseExpand = await expand(responseAnalized)
-      console.log(responseExpand)
-      console.log('------------')
+        setProcess(2)
+        let responseExpand = await expand(responseAnalized)
+        console.log(responseExpand)
+        console.log('------------')
 
-      setProcess(3)
-      let bibliographyNew = await bibliography(responseExpand)
-      console.log(bibliographyNew)
-      console.log('------------')
+        setProcess(3)
+        let bibliographyNew = await bibliography(responseExpand)
+        console.log(bibliographyNew)
+        console.log('------------')
 
-      const index = responseExpand.pointers.findIndex(
-        (item) => item.title === 'Bibliografía'
-      )
+        const index = responseExpand.pointers.findIndex(
+          (item) => item.title.includes('Bibliografía')
+        );
+        
+        if (index !== -1) {
+          responseExpand.pointers[index] = bibliographyNew;
+        }
+        
 
-      responseExpand.pointers[index] = bibliographyNew
+        localStorage.setItem(
+          'context',
+          JSON.stringify({
+            context: refinedContext,
+            asks: contextResponse.asks,
+          })
+        )
+        localStorage.setItem('analyze', JSON.stringify(responseExpand))
+        localStorage.setItem('finish', JSON.stringify(true))
 
-      localStorage.setItem(
-        'context',
-        JSON.stringify({ context: refinedContext, asks: contextResponse.asks })
-      )
-      localStorage.setItem('analyze', JSON.stringify(responseExpand))
-      localStorage.setItem('finish', JSON.stringify(true))
+        setContextResponse({
+          contextResponse: refinedContext,
+          asks: contextResponse.asks,
+        })
+        setAnalysisResponse({ analysisResponse: responseExpand })
+        setLoading(false)
+        setFinish(true)
+      }
 
-      setContextResponse({
-        contextResponse: refinedContext,
-        asks: contextResponse.asks,
-      })
-      setAnalysisResponse({ analysisResponse: responseExpand })
-      setLoading(false)
-      setFinish(true)
+      if (!isBibliografia && isEspanol) {
+        setProcess(0)
+
+        let refinedContext = await refine(requestBody)
+        setProcess(1)
+        console.log(refinedContext)
+        console.log('------------')
+
+        let responseAnalized = await analyze(refinedContext)
+        console.log(responseAnalized)
+        console.log('------------')
+
+        setProcess(2)
+        let responseExpand = await expand(responseAnalized)
+        console.log(responseExpand)
+        console.log('------------')
+
+        const index = responseExpand.pointers.findIndex(
+          (item) => item.title.includes('Bibliografía')
+        );
+        
+        if (index !== -1) {
+          responseExpand.pointers[index] = null;
+        }
+        
+        localStorage.setItem(
+          'context',
+          JSON.stringify({
+            context: refinedContext,
+            asks: contextResponse.asks,
+          })
+        )
+        localStorage.setItem('analyze', JSON.stringify(responseExpand))
+        localStorage.setItem('finish', JSON.stringify(true))
+
+        setContextResponse({
+          contextResponse: refinedContext,
+          asks: contextResponse.asks,
+        })
+        setAnalysisResponse({ analysisResponse: responseExpand })
+        setLoading(false)
+        setFinish(true)
+      }
+      if (!isBibliografia && !isEspanol) {
+        setProcess(0)
+
+        let refinedContext = await refine(requestBody)
+        setProcess(1)
+        console.log(refinedContext)
+        console.log('------------')
+
+        let responseAnalized = await analyze(refinedContext)
+        console.log(responseAnalized)
+        console.log('------------')
+
+        setProcess(2)
+        let responseExpand = await expand(responseAnalized)
+        console.log(responseExpand)
+        console.log('------------')
+
+        const index = responseExpand.pointers.findIndex(
+          (item) => item.title.includes('Bibliografía')
+        );
+        
+        if (index !== -1) {
+          responseExpand.pointers[index] = null;
+        }
+        
+
+        const textoTraducido = await translate(responseExpand)
+        console.log(textoTraducido)
+        localStorage.setItem(
+          'context',
+          JSON.stringify({
+            context: refinedContext,
+            asks: contextResponse.asks,
+          })
+        )
+        localStorage.setItem('analyze', JSON.stringify(textoTraducido))
+        localStorage.setItem('finish', JSON.stringify(true))
+
+        setContextResponse({
+          contextResponse: refinedContext,
+          asks: contextResponse.asks,
+        })
+        setAnalysisResponse({ analysisResponse: textoTraducido })
+        setLoading(false)
+        setFinish(true)
+      }
+
+      if (isBibliografia && !isEspanol) {
+        setProcess(0)
+
+        let refinedContext = await refine(requestBody)
+        setProcess(1)
+        console.log(refinedContext)
+        console.log('------------')
+
+        let responseAnalized = await analyze(refinedContext)
+        console.log(responseAnalized)
+        console.log('------------')
+
+        setProcess(2)
+        let responseExpand = await expand(responseAnalized)
+        console.log(responseExpand)
+        console.log('------------')
+
+        setProcess(3)
+        let bibliographyNew = await bibliography(responseExpand)
+        console.log(bibliographyNew)
+        console.log('------------')
+
+        const index = responseExpand.pointers.findIndex(
+          (item) => item.title.includes('Bibliografía')
+        );
+        
+        if (index !== -1) {
+          responseExpand.pointers[index] = bibliographyNew;
+        }        
+
+        const textoTraducido = await translate(responseExpand)
+
+        localStorage.setItem(
+          'context',
+          JSON.stringify({
+            context: refinedContext,
+            asks: contextResponse.asks,
+          })
+        )
+        localStorage.setItem('analyze', JSON.stringify(textoTraducido))
+        localStorage.setItem('finish', JSON.stringify(true))
+
+        setContextResponse({
+          contextResponse: refinedContext,
+          asks: contextResponse.asks,
+        })
+        setAnalysisResponse({ analysisResponse: textoTraducido })
+        setLoading(false)
+        setFinish(true)
+      }
     } catch (error) {
       setLoading(false)
       getToastifyError('Algo ha salido mal')

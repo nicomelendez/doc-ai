@@ -6,14 +6,11 @@ export const POST: APIRoute = async ({ request }) => {
     const jsonBody = await request.json()
     if (!jsonBody) return new Response('No body data', { status: 400 })
 
-    const context = await traducirAIngles(JSON.stringify(jsonBody.info))
-
-    return new Response(
-      JSON.stringify({ pointers: context, status: 'Completo' }),
-      {
-        status: 200,
-      }
-    )
+    const { pointers } = await traducirAIngles(JSON.stringify(jsonBody.info))
+ 
+    return new Response(JSON.stringify({ pointers, status: 'Completo' }), {
+      status: 200,
+    })
   } catch (error) {
     return new Response('Internal Server Error', { status: 500 })
   }
