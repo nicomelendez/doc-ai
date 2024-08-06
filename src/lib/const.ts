@@ -228,3 +228,40 @@ export const expandPointAll = (objeto: String) =>
   - Asegúrate de que el JSON generado cumpla con los requisitos mencionados.
   
   ` as const
+
+export const translateEnglish = (objeto: String) =>
+  `
+      You are being used to analyze the following text and generate a detailed JSON object exclusively. This JSON will be used to structure a Word document, so keep in mind that you should write it as if you were drafting a task report.
+  
+      **Language:** Generate the content in English, respecting the spelling and grammatical rules of the language. Use natural and fluid language. Avoid repeating information from the title or initial description and do not repeat previously mentioned content.
+  
+      --------------------
+      Based on the following object with the information:
+      ${objeto}
+  
+      ------------------------------
+  
+      **Instructions for the JSON:**
+        - **id:** A unique identifier for each point.
+        - **title:** The title of the point.
+        - **description:** A detailed description that includes various aspects of the topic, including benefits, drawbacks, concrete examples, and any other relevant points that enrich the content.
+  
+      **Required JSON Format:**
+  
+      [
+        {
+          "id": 1,
+          "title": "Title of Point 1",
+          "description": "Detailed description of Point 1, addressing different aspects of the topic."
+        },
+        {
+          "id": 2,
+          "title": "Title of Point 2",
+          "description": "Detailed description of Point 2, addressing different aspects of the topic."
+        }
+        // Other additional points...
+      ]
+  
+      **Note:** Output should be exclusively the JSON object in the same format as provided, without any additional text.
+      
+      ` as const

@@ -6,9 +6,10 @@ import {
   expandPoint,
   getPromptBibliografia,
   expandPointAll,
+  translateEnglish,
 } from './const'
 import type { AnalysisResponse, Ask, Pointer, Config } from './types'
-import { OpenAIStream, StreamingTextResponse } from 'ai'
+import { OpenAIStream } from 'ai'
 
 const perplexity = new OpenAI({
   apiKey: import.meta.env.PERPLEXITY_API_KEY || '',
@@ -34,7 +35,7 @@ export async function analyzeUserInfo(info: string) {
 
 
   Recuerda que no tiene que ser menor a 200 ni mayor a 250 caracteres. Asegúrate de que el texto sea claro, conciso y relevante para el tema proporcionado.
-  `;
+  `
 
   const query = {
     model: 'llama-3.1-70b-instruct',
@@ -55,6 +56,30 @@ export async function analyzeUserInfo(info: string) {
 export async function analyzeInfo(info: String) {
   try {
     const prompt = getPromptAnalyze(info)
+    const query = {
+      model: 'llama-3.1-70b-instruct',
+      messages: buildPrompt(prompt),
+      max_tokens: 10000,
+      temperature: 0.75,
+      frequency_penalty: 1,
+    } as const
+
+    const response = await perplexity.chat.completions.create(query)
+
+    const textResponse = response.choices[0].message.content
+
+    if (textResponse == null) return null
+
+    const jsonResponse = JSON.parse(textResponse)
+    return jsonResponse
+  } catch (error) {
+    return null
+  }
+}
+
+export async function traducirAIngles(info: String) {
+  try {
+    const prompt = translateEnglish(info)
     const query = {
       model: 'llama-3.1-70b-instruct',
       messages: buildPrompt(prompt),

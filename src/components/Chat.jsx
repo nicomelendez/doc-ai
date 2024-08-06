@@ -42,7 +42,7 @@ export default function Chat() {
             Genera un contexto para poder crear tu plantilla
           </h2>
           <p className='text-gray-300 pb-10'>
-            Describe un poco la idea de la cual necesitas realizar un informe.
+            Describe un poco la idea de la cual necesitas realizar el informe.
           </p>
         </div>
       ) : (

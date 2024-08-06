@@ -1,34 +1,89 @@
 import React from 'react'
+import useStore from '@/lib/useStore.ts'
 
 export default function Process({ process }) {
+  const { getConfig } = useStore((state) => state)
+
   const getProcessText = (process) => {
-    switch (process) {
-      case 0:
-        return '1/4 - Ajustando el contexto'
-      case 1:
-        return '2/4 - Buscando información'
-      case 2:
-        return '3/4 - Procesando la información'
-      case 3:
-        return '4/4 - Analizando bibliografías'
-      default:
-        return ''
+    const config = getConfig()
+
+    const { idioma, bibliografia } = config
+    const isBibliografia = bibliografia === 'true'
+    if (idioma === 'Español' && isBibliografia) {
+      switch (process) {
+        case 0:
+          return '1/4 - Ajustando el contexto'
+        case 1:
+          return '2/4 - Buscando información'
+        case 2:
+          return '3/4 - Procesando la información'
+        case 3:
+          return '4/4 - Analizando bibliografías'
+        default:
+          return ''
+      }
+    } else if (idioma === 'Español' && !isBibliografia) {
+      switch (process) {
+        case 0:
+          return '1/3 - Ajustando el contexto'
+        case 1:
+          return '2/3 - Buscando información'
+        case 2:
+          return '3/3 - Procesando la información'
+        default:
+          return ''
+      }
+    } else if (idioma === 'Inglés' && isBibliografia) {
+      switch (process) {
+        case 0:
+          return '1/5 - Ajustando el contexto'
+        case 1:
+          return '2/5 - Buscando información'
+        case 2:
+          return '3/5 - Procesando la información'
+        case 3:
+          return '4/5 - Analizando bibliografías'
+        case 4:
+          return '5/5 - Traducciendo a inglés'
+        default:
+          return ''
+      }
+    } else if (idioma === 'Inglés' && !isBibliografia) {
+      switch (process) {
+        case 0:
+          return '1/4 - Ajustando el contexto'
+        case 1:
+          return '2/4 - Buscando información'
+        case 2:
+          return '3/4 - Procesando la información'
+        case 3:
+          return '4/4 - Traducciendo a inglés'
+        default:
+          return ''
+      }
+    }
+  }
+
+  const getMaxSteps = () => {
+    const config = getConfig()
+    const { idioma, bibliografia } = config
+    const isBibliografia = bibliografia === 'true'
+    if (
+      (idioma === 'Español' && isBibliografia) ||
+      (idioma === 'Inglés' && !isBibliografia)
+    ) {
+      return 4
+    } else if (idioma === 'Inglés' && isBibliografia) {
+      return 5
+    } else if (idioma === 'Español' && !isBibliografia) {
+      return 3
     }
   }
 
   const getProcessWidth = (process) => {
-    switch (process) {
-      case 0:
-        return 'w-1/4'
-      case 1:
-        return 'w-2/4'
-      case 2:
-        return 'w-3/4'
-      case 3:
-        return 'w-4/4'
-      default:
-        return 'w-0'
-    }
+    const maxSteps = getMaxSteps()
+    const percentage = (process / maxSteps) * 100
+    return `w-[${percentage}%]`
   }
 
   return (
