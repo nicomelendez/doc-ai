@@ -189,10 +189,10 @@ export async function refineContext(originalContext: String, responses: Ask[]) {
 
 export async function expandPointDetails(
   title: String,
-  descripcion: String,
+  description: String,
   id: String
 ) {
-  const prompt = expandPoint(title, descripcion, 'Español', id)
+  const prompt = expandPoint(title, description, 'Español', id)
 
   const query = {
     model: 'llama-3.1-70b-instruct',
@@ -214,7 +214,7 @@ export async function expandPointDetails(
       objeto = JSON.parse(textResponse)
     } catch (error) {
       console.log('No se parseo bien')
-      objeto = { title, descripcion }
+      objeto = { title, description: description }
     }
 
     return objeto
@@ -230,7 +230,7 @@ export async function analyzeAndExpandInfo(pointers: Pointer[]) {
       if (point == null) return
       return await expandPointDetails(
         point.title,
-        point.descripcion,
+        point.description,
         point.id.toString()
       )
     })

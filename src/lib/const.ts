@@ -10,13 +10,13 @@ Estás siendo utilizado para analizar el siguiente texto y generar exclusivament
 - **pointers:** Un arreglo de objetos, donde cada objeto representa un punto del texto con la siguiente estructura:
   - **id:** Un identificador único para cada punto.
   - **title:** Un título descriptivo que resuma el punto.
-  - **descripcion:** Una descripción detallada y completa del punto, de al menos 800 caracteres, utilizando un lenguaje natural y evitando la repetición del título.
+  - **description:** Una descripción detallada y completa del punto, de al menos 800 caracteres, utilizando un lenguaje natural y evitando la repetición del título.
 
 Además, el JSON debe incluir una sección de bibliografía con enlaces reales a fuentes que validen algunos o todos los puntos mencionados. La bibliografía debe tener al menos tres referencias y estar en el siguiente formato:
 
 - **Bibliografía:** Un objeto dentro del arreglo 'pointers' con:
   - **title:** "Bibliografía".
-  - **descripcion:** Una lista de enlaces válidos y accesibles, citando las fuentes utilizadas.
+  - **description:** Una lista de enlaces válidos y accesibles, citando las fuentes utilizadas.
 
 **Requisitos adicionales:**
 
@@ -35,22 +35,22 @@ ${info}
     {
       "id": 1,
       "title": "Introducción",
-      "descripcion": "La programación web ha evolucionado significativamente, permitiendo la creación de sitios y aplicaciones más dinámicas y funcionales. En esta sección se explorarán los conceptos básicos y la importancia de entender la estructura y el funcionamiento de las tecnologías web."
+      "description": "La programación web ha evolucionado significativamente, permitiendo la creación de sitios y aplicaciones más dinámicas y funcionales. En esta sección se explorarán los conceptos básicos y la importancia de entender la estructura y el funcionamiento de las tecnologías web."
     },
     {
       "id": 2,
       "title": "Herramientas y frameworks",
-      "descripcion": "Existen diversas herramientas y frameworks que facilitan el desarrollo web. Entre los más populares se encuentran React, Angular y Vue.js, cada uno con sus propias ventajas y casos de uso específicos. Esta sección analizará sus características principales y cómo pueden optimizar el proceso de desarrollo."
+      "description": "Existen diversas herramientas y frameworks que facilitan el desarrollo web. Entre los más populares se encuentran React, Angular y Vue.js, cada uno con sus propias ventajas y casos de uso específicos. Esta sección analizará sus características principales y cómo pueden optimizar el proceso de desarrollo."
     },
     {
       "id": 3,
       "title": "Buenas prácticas",
-      "descripcion": "Adoptar buenas prácticas en programación web es esencial para mantener el código organizado y eficiente. Esto incluye el uso de control de versiones, la adherencia a estándares de codificación y la implementación de pruebas automatizadas. Estas prácticas no solo mejoran la calidad del código, sino que también facilitan su mantenimiento y escalabilidad."
+      "description": "Adoptar buenas prácticas en programación web es esencial para mantener el código organizado y eficiente. Esto incluye el uso de control de versiones, la adherencia a estándares de codificación y la implementación de pruebas automatizadas. Estas prácticas no solo mejoran la calidad del código, sino que también facilitan su mantenimiento y escalabilidad."
     },
     {
       "id": 4,
       "title": "Bibliografía",
-      "descripcion": "- [Artículo de revista especializada](https://example.com/articulo1) - [Libro de texto](https://example.com/libro1) - [Sitio web confiable](https://example.com/sitio1)"
+      "description": "- [Artículo de revista especializada](https://example.com/articulo1) - [Libro de texto](https://example.com/libro1) - [Sitio web confiable](https://example.com/sitio1)"
     }
   ]
 }
@@ -66,7 +66,7 @@ Estás siendo utilizado para analizar el siguiente texto y generar exclusivament
 
 **Instrucciones para el JSON:**
   - **title:** "Bibliografía".
-  - **descripcion:** Una descripción con fuentes reales y accesibles.
+  - **description:** Una descripción con fuentes reales y accesibles.
 
 Recuerda, el JSON debe incluir bibliografía con enlaces reales a fuentes que validen algunos o todos los puntos mencionados. La bibliografía debe tener al menos tres referencias y estar en el siguiente formato:
 
@@ -74,7 +74,7 @@ Recuerda, el JSON debe incluir bibliografía con enlaces reales a fuentes que va
 {
   "id": 9,
   "title": "Bibliografía",
-  "descripcion": "Esta sección ofrece una visión general de los recursos bibliográficos utilizados para comprender el impacto de la tecnología en la sociedad y la economía. El artículo de revista especializada 'The Future of Work' de Wired proporciona una visión profunda de cómo la tecnología está cambiando el panorama laboral y educativo. Por otro lado, el libro de texto 'Inteligencia Artificial: una Introducción' de J.P. Ortiz ofrece una introducción exhaustiva a los conceptos y aplicaciones de la inteligencia artificial. Además, el sitio web confiable 'The Future of Work' de Pew Research ofrece análisis y recomendaciones valiosas para entender el impacto de la tecnología en la sociedad y la economía. Estos recursos ofrecen una visión completa y actualizada de los cambios que se están produciendo en el mundo laboral, educativo y social, y cómo podemos prepararnos para estos cambios."
+  "description": "Esta sección ofrece una visión general de los recursos bibliográficos utilizados para comprender el impacto de la tecnología en la sociedad y la economía. El artículo de revista especializada 'The Future of Work' de Wired proporciona una visión profunda de cómo la tecnología está cambiando el panorama laboral y educativo. Por otro lado, el libro de texto 'Inteligencia Artificial: una Introducción' de J.P. Ortiz ofrece una introducción exhaustiva a los conceptos y aplicaciones de la inteligencia artificial. Además, el sitio web confiable 'The Future of Work' de Pew Research ofrece análisis y recomendaciones valiosas para entender el impacto de la tecnología en la sociedad y la economía. Estos recursos ofrecen una visión completa y actualizada de los cambios que se están produciendo en el mundo laboral, educativo y social, y cómo podemos prepararnos para estos cambios."
 }
 
 **Requisitos adicionales:**
@@ -93,7 +93,7 @@ SOLO QUIERO QUE ME DEVUELVAS UN OBJETO COMO EL EJEMPLO DADO EN FORMATO JSON. EST
 {
   "id": 4,
   "title": "Bibliografía",
-  "descripcion": "Esta sección ofrece una visión general de los recursos bibliográficos utilizados para comprender el impacto de la tecnología en la sociedad y la economía. El artículo de revista especializada 'The Future of Work' de Wired proporciona una visión profunda de cómo la tecnología está cambiando el panorama laboral y educativo. Por otro lado, el libro de texto 'Inteligencia Artificial: una Introducción' de J.P. Ortiz ofrece una introducción exhaustiva a los conceptos y aplicaciones de la inteligencia artificial. Además, el sitio web confiable 'The Future of Work' de Pew Research ofrece análisis y recomendaciones valiosas para entender el impacto de la tecnología en la sociedad y la economía. Estos recursos ofrecen una visión completa y actualizada de los cambios que se están produciendo en el mundo laboral, educativo y social, y cómo podemos prepararnos para estos cambios."
+  "description": "Esta sección ofrece una visión general de los recursos bibliográficos utilizados para comprender el impacto de la tecnología en la sociedad y la economía. El artículo de revista especializada 'The Future of Work' de Wired proporciona una visión profunda de cómo la tecnología está cambiando el panorama laboral y educativo. Por otro lado, el libro de texto 'Inteligencia Artificial: una Introducción' de J.P. Ortiz ofrece una introducción exhaustiva a los conceptos y aplicaciones de la inteligencia artificial. Además, el sitio web confiable 'The Future of Work' de Pew Research ofrece análisis y recomendaciones valiosas para entender el impacto de la tecnología en la sociedad y la economía. Estos recursos ofrecen una visión completa y actualizada de los cambios que se están produciendo en el mundo laboral, educativo y social, y cómo podemos prepararnos para estos cambios."
 }
 
 **IMPORTANTE:** La salida debe ser únicamente el objeto JSON en el formato especificado, sin ningún texto adicional. Asegúrate de que la bibliografía contenga enlaces válidos.
@@ -154,7 +154,7 @@ export const refineContextPrompt = (
 
 export const expandPoint = (
   title: String,
-  descripcion: String,
+  description: String,
   language: String,
   id: String
 ) =>
@@ -166,17 +166,17 @@ export const expandPoint = (
       **Instrucciones para el JSON:**
       - "id": Debe ser el mismo que estan en este ejemplo.
       - "title": Un título descriptivo que resuma el punto.
-      - "descripcion": Una descripción detallada del punto, de al menos 800 caracteres, usando un lenguaje natural y evitando la repetición del título.
+      - "description": Una descripción detallada del punto, de al menos 800 caracteres, usando un lenguaje natural y evitando la repetición del título.
 
       Título inicial: "${title}"
-      Descripción inicial: "${descripcion}"
+      Descripción inicial: "${description}"
 
       **Ejemplo de salida deseada en "${language}":**
 
       {
         "id": ${id},
         "title": "Introducción",
-        "descripcion": "La programación web ha evolucionado significativamente, permitiendo la creación de sitios y aplicaciones más dinámicas y funcionales. En esta sección se explorarán los conceptos básicos y la importancia de entender la estructura y el funcionamiento de las tecnologías web."
+        "description": "La programación web ha evolucionado significativamente, permitiendo la creación de sitios y aplicaciones más dinámicas y funcionales. En esta sección se explorarán los conceptos básicos y la importancia de entender la estructura y el funcionamiento de las tecnologías web."
       }
 
       **Nota:** La salida debe ser exclusivamente el objeto JSON en el formato especificado, sin ningún texto adicional.
@@ -199,7 +199,7 @@ export const expandPointAll = (objeto: String) =>
   **Instrucciones para el JSON:**
     - **id:** Un identificador único para cada punto.
     - **title:** El título del punto.
-    - **descripcion:** Una descripción detallada que incluya aspectos diversos del tema, incluyendo beneficios, desventajas, ejemplos concretos y cualquier otro punto relevante que enriquezca el contenido.
+    - **description:** Una descripción detallada que incluya aspectos diversos del tema, incluyendo beneficios, desventajas, ejemplos concretos y cualquier otro punto relevante que enriquezca el contenido.
   
   **Formato JSON requerido:**
 
@@ -207,12 +207,12 @@ export const expandPointAll = (objeto: String) =>
     {
       "id": 1,
       "title": "Título del Punto 1",
-      "descripcion": "Descripción detallada del Punto 1, abordando diferentes aspectos del tema."
+      "description": "Descripción detallada del Punto 1, abordando diferentes aspectos del tema."
     },
     {
       "id": 2,
       "title": "Título del Punto 2",
-      "descripcion": "Descripción detallada del Punto 2, abordando diferentes aspectos del tema."
+      "description": "Descripción detallada del Punto 2, abordando diferentes aspectos del tema."
     }
     // Otros puntos adicionales...
   ]

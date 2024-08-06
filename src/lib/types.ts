@@ -23,7 +23,7 @@ export interface Config {
 export interface Pointer {
   id: number
   title: string
-  descripcion: string
+  description: string
 }
 
 export interface Ask {

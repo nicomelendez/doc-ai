@@ -7,11 +7,17 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (!jsonBody) return new Response('No body data', { status: 400 })
 
+    console.log(jsonBody)
+
     const pointers = jsonBody.info.pointers
       ? jsonBody.info.pointers
       : jsonBody.info.analysisResponse.pointers
 
-    const filteredPointers = pointers.filter((point: any) => point.title && point.descripcion)
+    console.log(pointers)
+    
+    const filteredPointers = pointers.filter(
+      (point: any) => point && point.title && point.description
+    );    
 
     const docBuffer = await jsonToWord(filteredPointers)
 
@@ -43,7 +49,7 @@ async function jsonToWord(jsonData: any) {
                 size: 24,
               }),
               new TextRun({
-                text: point.descripcion,
+                text: point.description,
                 break: 1,
                 size: 20,
               }),
