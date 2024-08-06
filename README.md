@@ -3,9 +3,9 @@
 
 Aplicación web que **genera documentos** académicos. **Analiza un contexto específico**, hace preguntas para refinarlo, mejora el contexto con las respuestas. Luego, busca información y **genera una plantilla en Word** para tareas universitarias o de secundaria.
 
-![Doc AI - Web](https://res.cloudinary.com/djslvlh8h/image/upload/f_auto,q_auto/v1/doc-ai/new/rxniiswuknttce9flckd)
+![Doc AI - Web](https://res.cloudinary.com/djslvlh8h/image/upload/f_auto,q_auto/v1/doc-ai/sbemclgomhexu7neyama)
 
-![Doc AI - Movil](https://res.cloudinary.com/djslvlh8h/image/upload/f_auto,q_auto/v1/doc-ai/new/bssea8mpiwlmxpmwk89d)
+![Doc AI - Movil](https://res.cloudinary.com/djslvlh8h/image/upload/f_auto,q_auto/v1/doc-ai/elezbi2kztl81arstkdb)
 
 ## Características principales 
 
