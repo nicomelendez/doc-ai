@@ -2,9 +2,8 @@ import React, { useEffect } from 'react'
 import useStore from '@/lib/useStore.ts'
 
 export default function SaveLocalStore() {
-  const { setAnalysisResponse, setContextResponse, setConfig, setFinish } = useStore(
-    (state: any) => state
-  )
+  const { setAnalysisResponse, setContextResponse, setConfig, setFinish } =
+    useStore((state: any) => state)
 
   useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {
@@ -34,6 +33,12 @@ export default function SaveLocalStore() {
   }, [])
 
   useEffect(() => {
+    const resetString = localStorage.getItem('reset')
+    if (resetString == null) {
+      localStorage.clear()
+      localStorage.setItem('reset', JSON.stringify(true))
+    } 
+
     const analyzeString = localStorage.getItem('analyze')
     if (analyzeString != null) {
       setAnalysisResponse(JSON.parse(analyzeString))

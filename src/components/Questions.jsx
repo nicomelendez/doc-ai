@@ -32,36 +32,42 @@ export default function Questions({
 
       let refinedContext = await refine(requestBody)
       setProcess(1)
+      console.log(refinedContext)
+      console.log('------------')
 
       let responseAnalized = await analyze(refinedContext)
+      console.log(responseAnalized)
+      console.log('------------')
 
       setProcess(2)
       let responseExpand = await expand(responseAnalized)
+      console.log(responseExpand)
+      console.log('------------')
 
       setProcess(3)
       let bibliographyNew = await bibliography(responseExpand)
+      console.log(bibliographyNew)
+      console.log('------------')
 
-      // Encuentra el índice del objeto con el título 'Bibliografía'
       const index = responseExpand.pointers.findIndex(
         (item) => item.title === 'Bibliografía'
       )
 
-      // Actualiza directamente el objeto en esa posición
       responseExpand.pointers[index] = bibliographyNew
 
       localStorage.setItem(
         'context',
         JSON.stringify({ context: refinedContext, asks: contextResponse.asks })
       )
+      localStorage.setItem('analyze', JSON.stringify(responseExpand))
+      localStorage.setItem('finish', JSON.stringify(true))
+
       setContextResponse({
         contextResponse: refinedContext,
         asks: contextResponse.asks,
       })
-      localStorage.setItem('analyze', JSON.stringify(responseExpand))
       setAnalysisResponse({ analysisResponse: responseExpand })
-
       setLoading(false)
-      localStorage.setItem('finish', JSON.stringify(true))
       setFinish(true)
     } catch (error) {
       getToastifyError('Algo ha salido mal')
