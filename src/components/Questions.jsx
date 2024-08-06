@@ -106,7 +106,7 @@ export default function Questions({
         );
         
         if (index !== -1) {
-          responseExpand.pointers[index] = null;
+          responseExpand.pointers.splice(index, 1);
         }
         
         localStorage.setItem(
@@ -149,9 +149,8 @@ export default function Questions({
         );
         
         if (index !== -1) {
-          responseExpand.pointers[index] = null;
-        }
-        
+          responseExpand.pointers.splice(index, 1);
+        }      
 
         const textoTraducido = await translate(responseExpand)
         console.log(textoTraducido)
