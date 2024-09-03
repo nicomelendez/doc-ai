@@ -11,9 +11,10 @@ export default defineConfig({
     enabled: false,
   },
   integrations: [tailwind(), react()],
-  output: 'server',
+  output: 'hybrid',
   adapter: vercel({
     maxDuration: 60,
+    webAnalytics: { enabled: true }
   }),
   vite: {
     build: {

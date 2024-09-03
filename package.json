@@ -10,29 +10,30 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@fontsource-variable/rubik": "5.0.22",
+    "@fontsource-variable/rubik": "5.0.23",
     "@github/typing-effect-element": "^0.1.0",
-    "ai": "3.2.40",
-    "astro": "4.12.3",
+    "@vercel/analytics": "^1.3.1",
+    "ai": "3.3.26",
+    "astro": "4.15.2",
     "docx": "^8.5.0",
-    "openai": "4.53.2",
+    "openai": "4.57.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "toastify-js": "^1.12.0",
-    "zustand": "4.5.4"
+    "zustand": "4.5.5"
   },
   "devDependencies": {
-    "@astrojs/check": "0.8.3",
-    "@astrojs/react": "3.6.1",
+    "@astrojs/check": "0.9.3",
+    "@astrojs/react": "3.6.2",
     "@astrojs/tailwind": "5.1.0",
-    "@astrojs/vercel": "7.7.2",
-    "@midudev/tailwind-animations": "0.0.7",
-    "@types/react": "18.3.3",
+    "@astrojs/vercel": "7.8.0",
+    "@midudev/tailwind-animations": "0.1.0",
+    "@types/react": "18.3.5",
     "@types/react-dom": "18.3.0",
-    "lightningcss": "1.25.1",
-    "postcss-nesting": "12.1.5",
-    "tailwindcss": "3.4.7",
+    "lightningcss": "1.26.0",
+    "postcss-nesting": "13.0.0",
+    "tailwindcss": "3.4.10",
     "typescript": "5.5.4",
-    "vite-plugin-pwa": "0.20.1"
+    "vite-plugin-pwa": "0.20.3"
   }
 }

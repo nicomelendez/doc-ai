@@ -59,7 +59,7 @@ export async function analyzeInfo(info: String) {
     const query = {
       model: 'llama-3.1-70b-instruct',
       messages: buildPrompt(prompt),
-      max_tokens: 10000,
+      max_tokens: 5000,
       temperature: 0.75,
       frequency_penalty: 1,
     } as const
@@ -83,7 +83,7 @@ export async function traducirAIngles(info: String) {
     const query = {
       model: 'llama-3.1-70b-instruct',
       messages: buildPrompt(prompt),
-      max_tokens: 10000,
+      max_tokens: 5000,
       temperature: 0.75,
       frequency_penalty: 1,
     } as const
@@ -197,7 +197,7 @@ export async function expandPointDetails(
   const query = {
     model: 'llama-3.1-70b-instruct',
     messages: buildPrompt(prompt),
-    max_tokens: 10000,
+    max_tokens: 5000,
     temperature: 0.75,
     frequency_penalty: 1,
   }
@@ -244,7 +244,7 @@ export async function expandPointDetailsAll(initialPoints: AnalysisResponse) {
   const query = {
     model: 'llama-3.1-70b-instruct',
     messages: buildPrompt(prompt),
-    max_tokens: 10000,
+    max_tokens: 5000,
     temperature: 1,
     frequency_penalty: 1,
   }

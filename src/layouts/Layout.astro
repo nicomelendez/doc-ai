@@ -6,6 +6,7 @@ import Header from '@/components/layout/Header.astro'
 import Background from '@/components/layout/Background.astro'
 import Modal from '@/components/layout/Modal.astro'
 import SaveLocalStore from '@/components/SaveLocalStore'
+import SEO from '@/components/utils/SEO.astro'
 
 interface Props {
   title: string
@@ -18,17 +19,7 @@ const { title } = Astro.props
 <html lang='es'>
   <head>
     <meta charset='UTF-8' />
-    <meta
-      name='description'
-      content='Genera informes profesionales de manera sencilla y rápida para tus estudios o trabajo. Doc AI transforma un texto en un documento listo para usar.'
-    />
-    <meta name='viewport' content='width=device-width' />
-    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-    <link
-      rel='stylesheet'
-      type='text/css'
-      href='https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css'
-    />
+    <SEO title={title}/>
     <title>{title}</title>
     <ViewTransitions />
   </head>
